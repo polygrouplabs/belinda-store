@@ -3,13 +3,37 @@ import BestSelling from "@/components/app/BestSelling";
 import Poster from "@/components/app/Poster";
 import NewSeries from "@/components/app/NewSeries";
 
-export default function Page() {
-    return (
-        <>
-            <Banner />
-            <BestSelling />
-            <Poster />
-            <NewSeries />
-        </>
-    );
+import { HeadlessServerImpl } from "@/controllers/headlessServerImpl";
+import {
+  NEXT_PUBLIC_BEST_SELLERS_ID,
+  NEXT_PUBLIC_NEW_COLLECTIONS_ID,
+} from "@/utils/env";
+
+const env = {
+  bestSellers: NEXT_PUBLIC_BEST_SELLERS_ID!,
+  newCollection: NEXT_PUBLIC_NEW_COLLECTIONS_ID!,
+};
+
+export default async function Page() {
+  const HeadlessServerImplInstance = new HeadlessServerImpl();
+
+  const [bestSellingProducts, newCollectionProducts] = await Promise.all([
+    await HeadlessServerImplInstance.getProductsByCollectionId(
+      env.bestSellers,
+      8
+    ),
+    await HeadlessServerImplInstance.getProductsByCollectionId(
+      env.newCollection,
+      5
+    ),
+  ]);
+
+  return (
+    <>
+      <Banner />
+      <BestSelling title="MÁS VENDIDOS" products={bestSellingProducts} />
+      <Poster />
+      <NewSeries products={newCollectionProducts} />
+    </>
+  );
 }
