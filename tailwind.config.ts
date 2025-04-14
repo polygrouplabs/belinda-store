@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const { addDynamicIconSelectors } = require('@iconify/tailwind')
 
 export default {
 	darkMode: ["class"],
@@ -118,5 +119,5 @@ export default {
 			},
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [require("tailwindcss-animate"), addDynamicIconSelectors()],
 } satisfies Config;
