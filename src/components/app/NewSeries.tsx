@@ -22,6 +22,7 @@ const NewSeries = ({ products }: newSeriesProps) => {
             product={products[0]}
             className="w-full aspect-square"
             sizes="(min-width: 1024px) 576px, 100vw"
+            showBadge={true}
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 lg:gap-4">
@@ -31,6 +32,7 @@ const NewSeries = ({ products }: newSeriesProps) => {
                 product={product}
                 className="w-full aspect-square"
                 sizes="(min-width: 1024px) 288px, (min-width: 640px) 50vw, 100vw"
+                showBadge={true}
               />
             ))}
           </div>

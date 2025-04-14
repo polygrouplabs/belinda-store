@@ -14,12 +14,14 @@ interface ProductDisplayProps {
   className?: string;
   sizes?: string;
   product: productInterface;
+  showBadge?: boolean;
 }
 
 const ProductDisplay = ({
   product,
   className,
   sizes = "100vw",
+  showBadge = false,
 }: ProductDisplayProps) => {
   const { isOnSale, ribbonText } = useProductCard(product);
   const [isHovered, setIsHovered] = useState(false);
@@ -41,7 +43,7 @@ const ProductDisplay = ({
           alt="product"
           fill
           sizes={sizes}
-          className="object-top object-cover absolute hover:opacity-0 duration-500 z-10"
+          className="object-center object-cover absolute hover:opacity-0 duration-500 z-10"
           quality={100}
         />
 
@@ -51,21 +53,25 @@ const ProductDisplay = ({
             alt="product"
             fill
             sizes={sizes}
-            className="object-top object-cover absolute top-0 left-0 transition-opacity duration-300 z-0"
+            className="object-center object-cover absolute top-0 left-0 transition-opacity duration-300 z-0"
             quality={100}
           />
         )}
       </Link>
-      <div className="absolute left-0 top-6 z-20">
-        {isOnSale && (
-          <div className="bg-red text-white text-[10px] px-2 py-1 mb-2">OFERTA</div>
-        )}
-        {ribbonText && (
-          <div className="bg-black text-white text-[10px] px-2 py-1">
-            {ribbonText}
-          </div>
-        )}
-      </div>
+      {showBadge && (
+        <div className="absolute left-0 top-6 z-20">
+          {isOnSale && (
+            <div className="bg-red text-white text-[10px] px-2 py-1 mb-2">
+              OFERTA
+            </div>
+          )}
+          {ribbonText && (
+            <div className="bg-black text-white text-[10px] px-2 py-1">
+              {ribbonText}
+            </div>
+          )}
+        </div>
+      )}
 
       <div
         onClick={() => {}}
