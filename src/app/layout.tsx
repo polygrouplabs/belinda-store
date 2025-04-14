@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { Montserrat } from "next/font/google"
+import { Montserrat } from "next/font/google";
+import { HeadlessClientContextProvider } from "@/context/headlessContext";
 
 export const viewport: Viewport = {
-  width: 'device-width',
-  userScalable: false
-}
+  width: "device-width",
+  userScalable: false,
+};
 
 export const metadata: Metadata = {
   title: "belinda-shop",
@@ -13,9 +14,9 @@ export const metadata: Metadata = {
 };
 
 const montserrat = Montserrat({
-  subsets: ['latin'],
-  display: 'swap',
-})
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
@@ -24,9 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${montserrat.className} antialiased`}>
-        {children}
-      </body>
+      <HeadlessClientContextProvider>
+        <body className={`${montserrat.className} antialiased`}>
+          {children}
+        </body>
+      </HeadlessClientContextProvider>
     </html>
   );
 }
