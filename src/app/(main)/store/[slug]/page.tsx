@@ -44,25 +44,27 @@ export default async function SlugPage(props: { params: Params }) {
       slug
     );
 
-    productsQuery = await HeadlessServerImplInstance.getProductsQuery(
-      params.productName,
-      categoriesSlugData.collection?._id,
-      params.type,
-      Number(params.min) || 0,
-      Number(params.max) || 2000000,
-      Number(params.limit) || 12,
-      params.page
-    );
+    if (categoriesSlugData) {
+      productsQuery = await HeadlessServerImplInstance.getProductsQuery(
+        params.productName,
+        categoriesSlugData.collection?._id,
+        params.type,
+        Number(params.min) || 0,
+        Number(params.max) || 2000000,
+        Number(params.limit) || 12,
+        params.page
+      );
+    }
 
     if (productsQuery) {
       productsResponse = await productsQuery.find();
       productsData = productsResponse.items as productInterface[];
     }
   } catch (error) {
-    console.error("Error fetching categories data:", error);
+    console.warn("Error fetching categories data:", error);
   }
 
-  return (
+  return productsData.length > 0 ? (
     <>
       <div className="container mx-auto max-w-[73rem] px-4">
         <div className="flex flex-col items-center text-center max-w-[600px] my-20 mx-auto">
@@ -76,5 +78,18 @@ export default async function SlugPage(props: { params: Params }) {
         <ProductList products={productsData} />
       </Suspense>
     </>
+  ) : (
+    <div className="container mx-auto max-w-[73rem] px-4">
+      <div className="flex flex-col items-center text-center max-w-[600px] my-20 mx-auto gap-5">
+        <h3 className="text-xl lg:text-4xl font-bold">
+          Categoría sin productos
+        </h3>
+        <span className="icon-[icon-park-solid--commodity] text-[80px] opacity-80" />
+        <p className="text-grey-dark text-sm lg:text-base">
+          No hay productos en esta categoría. Por favor, vuelve más tarde o
+          explora otras categorías.
+        </p>
+      </div>
+    </div>
   );
 }

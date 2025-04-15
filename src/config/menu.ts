@@ -21,7 +21,7 @@ export const BREADCRUMB_MAPPING: Record<string, string> = {
   pants: "Pantalones",
   accessory: "Accesorios",
   store: "Tienda",
-  discount: "Ofertas",
+  ofertas: "Ofertas",
 };
 
 export const MENU_ITEMS: MenuItem[] = [
@@ -65,7 +65,7 @@ export const MENU_ITEMS: MenuItem[] = [
   {
     label: "Ofertas",
     type: "link",
-    href: "/store/discount",
+    href: "/store/ofertas",
   },
   {
     label: "",

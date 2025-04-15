@@ -28,7 +28,7 @@ export const ROUTE_TITLES: Record<string, RouteTitle> = {
         title: 'Nueva Colección',
         description: 'Descubre las últimas tendencias en moda femenina en Belinda.'
     },
-    '/store/discount': {
+    '/store/ofertas': {
         title: 'Ofertas',
         description: 'Aprovecha nuestras ofertas exclusivas en ropa de alta calidad. Encuentra tu estilo favorito a precios increíbles.'
     }

@@ -17,6 +17,21 @@ const env = {
   all_products: NEXT_PUBLIC_ALL_PRODUCTS_ID ?? "",
 };
 
+export interface ApplicationErrorDetails {
+  description: string;
+  code: string;
+  data: Record<string, unknown>;
+}
+
+export interface ErrorDetails {
+  applicationError: ApplicationErrorDetails;
+}
+
+export interface ServerError {
+  message: string;
+  details: ErrorDetails;
+}
+
 export class HeadlessServerImpl {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private headlessServerInstance: any;
@@ -68,21 +83,26 @@ export class HeadlessServerImpl {
   ): Promise<productsQueryBuilderInterface | undefined> {
     await this.ensureInitialized();
 
-    // let productsData: productInterface[] = [];
-    const productsQuery = this.productsQuery
-      .startsWith("name", productName || "")
-      .eq("collectionIds", categorieSlug ?? env.all_products)
-      .hasSome("productType", type ? [type] : [type ?? "physical", "digital"])
-      .gt("priceData.price", min)
-      .lt("priceData.price", max)
-      .limit(PRODUCT_PER_LIST_SECTION)
-      .descending("lastUpdated")
-      .skip(page ? parseInt(page) * PRODUCT_PER_LIST_SECTION : 0);
+    try {
+      // let productsData: productInterface[] = [];
+      const productsQuery = this.productsQuery
+        .startsWith("name", productName || "")
+        .eq("collectionIds", categorieSlug ?? env.all_products)
+        .hasSome("productType", type ? [type] : [type ?? "physical", "digital"])
+        .gt("priceData.price", min)
+        .lt("priceData.price", max)
+        .limit(PRODUCT_PER_LIST_SECTION)
+        .descending("lastUpdated")
+        .skip(page ? parseInt(page) * PRODUCT_PER_LIST_SECTION : 0);
 
-    if (productsQuery) {
-      // const productResponse = await productsQuery.find();
-      // productsData = productResponse.items as productInterface[];
+      if (productsQuery) {
+        // const productResponse = await productsQuery.find();
+        // productsData = productResponse.items as productInterface[];
+      }
       return productsQuery;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      return undefined;
     }
   }
 
@@ -108,10 +128,22 @@ export class HeadlessServerImpl {
 
   async getCategorieSlugData(
     slug: string = "all-products"
-  ): Promise<collectionsBySlugResponse> {
+  ): Promise<collectionsBySlugResponse | undefined> {
     await this.ensureInitialized();
-    const categorieBySlug =
-      await this.headlessServerInstance.collections.getCollectionBySlug(slug);
-    return categorieBySlug as collectionsBySlugResponse;
+    try {
+      const categorieBySlug =
+        await this.headlessServerInstance.collections.getCollectionBySlug(slug);
+      return categorieBySlug as collectionsBySlugResponse;
+    } catch (error: unknown) {
+      const thisError = error as ServerError;
+      if (thisError?.details?.applicationError?.code === "CATEGORY_NOT_FOUND") {
+        console.warn(
+          `Category with slug "${slug}" was not found. Returning undefined.`
+        );
+        return undefined;
+      }
+      console.error("Error fetching categories data:", error);
+      return undefined;
+    }
   }
 }
