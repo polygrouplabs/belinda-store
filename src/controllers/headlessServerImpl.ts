@@ -60,7 +60,7 @@ export class HeadlessServerImpl {
   async getProductsQuery(
     productName: string | undefined,
     categorieSlug: string | undefined | null,
-    type: string | undefined,
+    type: "physical" | "digital" | undefined,
     min: number,
     max: number,
     PRODUCT_PER_LIST_SECTION: number,
@@ -82,9 +82,8 @@ export class HeadlessServerImpl {
     if (productsQuery) {
       // const productResponse = await productsQuery.find();
       // productsData = productResponse.items as productInterface[];
+      return productsQuery;
     }
-
-    return productsQuery;
   }
 
   async getProductsByCollectionId(

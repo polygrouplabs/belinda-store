@@ -1,41 +1,80 @@
-import ProductList from "@/components/app/ProductList"
-import { getRouteTitle } from "@/config/route-titles"
-import { products } from "@/data/products"
-import { getLocalizedPath } from "@/lib/utils"
-type Params = Promise<{ slug: string }>
+import { Suspense } from "react";
 
-export async function generateMetadata(props: {
-    params: Params
-}) {
-    const params = await props.params
-    const slug = params.slug
-    const title = getLocalizedPath(slug)
-    return { title }
+import { Params } from "@/types/searchParams";
+import { getLocalizedPath } from "@/lib/utils";
+import { getRouteTitle } from "@/config/route-titles";
+import { HeadlessServerImpl } from "@/controllers/headlessServerImpl";
+
+import {
+  productInterface,
+  productsQueryBuilderInterface,
+  productsQueryResultInterface,
+} from "@/interfaces/product";
+import { collectionsBySlugResponse } from "@/interfaces/collection";
+
+import ProductList from "@/components/app/ProductList";
+
+export async function generateMetadata(props: { params: Params }) {
+  const params = await props.params;
+  const slug = params.slug;
+  const title = getLocalizedPath(slug);
+  return { title };
 }
 
-export default async function SlugPage(props: {
-    params: Params
-}) {
-    const params = await props.params
-    const slug = params.slug
-    const pathname = `/store/${slug}`
-    const { title, description } = getRouteTitle(pathname)
+// * console.log("PARAMS =>", params);
+// * console.log("SLUG =>", slug);
+// * console.log("PATHNAME =>", pathname);
 
-    // 根据slug获取商品列表
-    // const products = getProductsBySlug(slug)
-    return (
-        <>
-            <div className="container mx-auto max-w-[73rem] px-4">
-                <div className="flex flex-col items-center text-center max-w-[600px] my-20 mx-auto">
-                    <h3 className='text-xl lg:text-4xl font-bold'>
-                        {title}
-                    </h3>
-                    <p className="text-grey-dark text-sm lg:text-base mt-6">
-                        {description}
-                    </p>
-                </div>
-            </div>
-            <ProductList products={products} />
-        </>
-    )
+export default async function SlugPage(props: { params: Params }) {
+  const params = await props.params;
+  const slug = params.slug;
+  const pathname = `/store/${slug}`;
+  const { title, description } = getRouteTitle(pathname);
+
+  const HeadlessServerImplInstance = new HeadlessServerImpl();
+
+  let categoriesSlugData: collectionsBySlugResponse | undefined;
+
+  let productsData: productInterface[] = [];
+  let productsQuery: productsQueryBuilderInterface | undefined;
+  let productsResponse: productsQueryResultInterface | undefined;
+
+  try {
+    categoriesSlugData = await HeadlessServerImplInstance.getCategorieSlugData(
+      slug
+    );
+
+    productsQuery = await HeadlessServerImplInstance.getProductsQuery(
+      params.productName,
+      categoriesSlugData.collection?._id,
+      params.type,
+      Number(params.min) || 0,
+      Number(params.max) || 2000000,
+      Number(params.limit) || 12,
+      params.page
+    );
+
+    if (productsQuery) {
+      productsResponse = await productsQuery.find();
+      productsData = productsResponse.items as productInterface[];
+    }
+  } catch (error) {
+    console.error("Error fetching categories data:", error);
+  }
+
+  return (
+    <>
+      <div className="container mx-auto max-w-[73rem] px-4">
+        <div className="flex flex-col items-center text-center max-w-[600px] my-20 mx-auto">
+          <h3 className="text-xl lg:text-4xl font-bold">{title}</h3>
+          <p className="text-grey-dark text-sm lg:text-base mt-6">
+            {description}
+          </p>
+        </div>
+      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProductList products={productsData} />
+      </Suspense>
+    </>
+  );
 }

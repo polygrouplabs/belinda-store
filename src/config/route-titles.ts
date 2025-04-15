@@ -24,7 +24,7 @@ export const ROUTE_TITLES: Record<string, RouteTitle> = {
         title: 'Accesorios',
         description: 'Encuentra los accesorios perfectos para complementar tu look, desde bolsos elegantes hasta joyas que realzan tu estilo.'
     },
-    '/store/new-collection': {
+    '/store/nueva-coleccion': {
         title: 'Nueva Colección',
         description: 'Descubre las últimas tendencias en moda femenina en Belinda.'
     },
