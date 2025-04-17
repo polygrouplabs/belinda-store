@@ -8,19 +8,19 @@ export const ROUTE_TITLES: Record<string, RouteTitle> = {
         title: 'Ropa para Mujer',
         description: 'Siente el estilo que Belinda trae para ti en la nueva colección de ropa para mujer con texturas, prints y acabados que se adaptan a todos los estilos.'
     },
-    '/store/dress': {
+    '/store/vestidos': {
         title: 'Vestidos',
         description: 'Descubre nuestra colección de vestidos elegantes y modernos, diseñados para realzar tu belleza en cualquier ocasión.'
     },
-    '/store/blouse': {
+    '/store/blusas': {
         title: 'Blusas',
         description: 'Explora nuestra selección de blusas versátiles y elegantes, perfectas para completar tu look diario con estilo.'
     },
-    '/store/pants': {
+    '/store/pantalones': {
         title: 'Pantalones',
         description: 'Descubre nuestra colección de pantalones cómodos y versátiles, ideales para cualquier ocasión.'
     },
-    '/store/accessory': {
+    '/store/accesorios': {
         title: 'Accesorios',
         description: 'Encuentra los accesorios perfectos para complementar tu look, desde bolsos elegantes hasta joyas que realzan tu estilo.'
     },

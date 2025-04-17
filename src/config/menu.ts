@@ -16,10 +16,10 @@ export type MenuItem = {
 // 面包屑映射
 export const BREADCRUMB_MAPPING: Record<string, string> = {
   "nueva-coleccion": "Nueva colección",
-  dress: "Vestidos",
-  blouse: "Blusas",
-  pants: "Pantalones",
-  accessory: "Accesorios",
+  vestidos: "Vestidos",
+  blusas: "Blusas",
+  pantalones: "Pantalones",
+  accesorios: "Accesorios",
   store: "Tienda",
   ofertas: "Ofertas",
 };
@@ -42,19 +42,19 @@ export const MENU_ITEMS: MenuItem[] = [
     children: [
       {
         label: "Vestidos",
-        href: "/store/dress",
+        href: "/store/vestidos",
       },
       {
         label: "Blusas",
-        href: "/store/blouse",
+        href: "/store/blusas",
       },
       {
         label: "Pantalones",
-        href: "/store/pants",
+        href: "/store/pantalones",
       },
       {
         label: "Accesorios",
-        href: "/store/accessory",
+        href: "/store/accesorios",
       },
       {
         label: "Ver todo",

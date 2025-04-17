@@ -79,7 +79,7 @@ export default async function SlugPage(props: { params: Params }) {
       </Suspense>
     </>
   ) : (
-    <div className="container mx-auto max-w-[73rem] px-4">
+    <div className="container max-w-[73rem] min-h-[60vh] flex justify-center items-center mx-auto px-4">
       <div className="flex flex-col items-center text-center max-w-[600px] my-20 mx-auto gap-5">
         <h3 className="text-xl lg:text-4xl font-bold">
           Categoría sin productos
