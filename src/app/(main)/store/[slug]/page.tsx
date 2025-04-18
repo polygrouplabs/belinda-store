@@ -28,7 +28,7 @@ export async function generateMetadata(props: { params: Params }) {
 export default async function SlugPage(props: { params: Params }) {
   const params = await props.params;
   const slug = params.slug;
-  const pathname = `/store/${slug}`;
+  const pathname = `/productos/${slug}`;
   const { title, description } = getRouteTitle(pathname);
 
   const HeadlessServerImplInstance = new HeadlessServerImpl();

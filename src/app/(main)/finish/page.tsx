@@ -27,7 +27,7 @@ export default function FinishPage() {
                 {/* 返回商店按钮 */}
                 <div className="w-full max-w-[560px]">
                     <Button
-                        onClick={() => router.push('/store')}
+                        onClick={() => router.push('/productos')}
                         variant="form-solid"
                         className="h-[68px] mt-4 w-full"
                     >

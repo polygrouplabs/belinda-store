@@ -20,7 +20,7 @@ export const BREADCRUMB_MAPPING: Record<string, string> = {
   blusas: "Blusas",
   pantalones: "Pantalones",
   accesorios: "Accesorios",
-  store: "Tienda",
+  productos: "Tienda",
   ofertas: "Ofertas",
 };
 
@@ -34,7 +34,7 @@ export const MENU_ITEMS: MenuItem[] = [
   {
     label: "Nueva colección",
     type: "link",
-    href: "/store/nueva-coleccion",
+    href: "/productos/nueva-coleccion",
   },
   {
     label: "Tienda",
@@ -42,30 +42,30 @@ export const MENU_ITEMS: MenuItem[] = [
     children: [
       {
         label: "Vestidos",
-        href: "/store/vestidos",
+        href: "/productos/vestidos",
       },
       {
         label: "Blusas",
-        href: "/store/blusas",
+        href: "/productos/blusas",
       },
       {
         label: "Pantalones",
-        href: "/store/pantalones",
+        href: "/productos/pantalones",
       },
       {
         label: "Accesorios",
-        href: "/store/accesorios",
+        href: "/productos/accesorios",
       },
       {
         label: "Ver todo",
-        href: "/store",
+        href: "/productos",
       },
     ],
   },
   {
     label: "Ofertas",
     type: "link",
-    href: "/store/ofertas",
+    href: "/productos/ofertas",
   },
   {
     label: "",

@@ -74,7 +74,7 @@ export default function PurchasePage() {
                     <div className="my-6 flex flex-col gap-4 lg:flex-row">
                         {/* 添加更多商品按钮 */}
                         <Button
-                            onClick={() => router.push('/store')}
+                            onClick={() => router.push('/productos')}
                             variant="hollow-grey-dark"
                             className="w-full h-[68px] text-h6 text-grey"
                         >

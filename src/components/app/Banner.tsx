@@ -101,7 +101,7 @@ const Banner = () => {
                     <span className='text-[14px] leading-[30px] tracking-[5px] lg:text-h4 select-none'>New Colecction</span>
                     <span className='text-6xl lg:text-9xl select-none tracking-[0.2px]'>Snow</span>
                     <span className='text-6xl lg:text-9xl select-none tracking-[0.2px]'>Season</span>
-                    <Button variant="poster" onClick={() => router.push('/store/nueva-coleccion')} className='w-[194px] h-[68px] flex'>
+                    <Button variant="poster" onClick={() => router.push('/productos/nueva-coleccion')} className='w-[194px] h-[68px] flex'>
                         <span className='text-sm lg:text-[14px] leading-[28px] m-auto'>Ver lo nuevo</span>
                     </Button>
                 </div>

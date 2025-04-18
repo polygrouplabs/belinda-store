@@ -7,7 +7,7 @@ import Filter from '@/components/app/Filter';
 import { useState } from 'react';
 
 export default function StorePage() {
-    const { title, description } = getRouteTitle('/store');
+    const { title, description } = getRouteTitle('/productos');
     const [filterVisible, setFilterVisible] = useState(false);
 
     return (
