@@ -79,7 +79,9 @@ export class HeadlessServerImpl {
     min: number,
     max: number,
     PRODUCT_PER_LIST_SECTION: number,
-    page: string | undefined
+    page: string | undefined,
+
+    sortOrder?: "asc" | "desc"
   ): Promise<productsQueryBuilderInterface | undefined> {
     await this.ensureInitialized();
 
@@ -94,6 +96,12 @@ export class HeadlessServerImpl {
         .limit(PRODUCT_PER_LIST_SECTION)
         .descending("lastUpdated")
         .skip(page ? parseInt(page) * PRODUCT_PER_LIST_SECTION : 0);
+
+      if (sortOrder === "asc") {
+        productsQuery.ascending("price");
+      } else if (sortOrder === "desc") {
+        productsQuery.descending("price");
+      }
 
       if (productsQuery) {
         // const productResponse = await productsQuery.find();

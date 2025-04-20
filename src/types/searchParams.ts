@@ -5,8 +5,9 @@ export type Params = Promise<{
   categorie?: string;
   type?: "physical" | "digital";
   limit?: string;
-  sort?: string;
   min?: string;
   max?: string;
   page?: string;
+
+  sort?: "asc" | "desc";
 }>;

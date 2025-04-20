@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -18,23 +19,19 @@ import { FaFilter } from "react-icons/fa";
 import { useMediaQuery } from "@/hooks/handlers/use-media-query";
 
 export const filterItems = [
-  { label: "Ver todos", href: "/" },
-  { label: "Más vendidos", href: "/" },
-  { label: "Ofertas", href: "/" },
-  { label: "Mayor a menor precio", href: "/" },
-  { label: "Menor a mayor Precio", href: "/" },
+  { label: "Ver todos", href: "/productos" },
+  { label: "Más vendidos", href: "/productos?categorie=mas-vendidos" },
+  { label: "Ofertas", href: "/productos?categorie=ofertas" },
+  { label: "Mayor a menor precio", href: "/productos?sort=asc" },
+  { label: "Menor a mayor Precio", href: "/productos?sort=desc" },
 ];
 
-interface FilterProps {
-  filterVisible: boolean;
-  onFilterVisibleChange: (visible: boolean) => void;
-}
+const buttonClassName =
+  "w-[96px] h-[34px] ml-auto hover:bg-gold-dark cursor-pointer bg-gold flex justify-center items-center gap-1 text-white";
 
-export default function Filter({
-  filterVisible,
-  onFilterVisibleChange,
-}: FilterProps) {
+export default function Filter() {
   const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const [filterVisible, onFilterVisibleChange] = useState(false);
 
   if (isDesktop) {
     return (
@@ -50,7 +47,7 @@ export default function Filter({
             >
               {filterItems.map((item) => (
                 <li key={item.label}>
-                  <Link href={item.href}>
+                  <Link href={item.href} prefetch={true}>
                     <span className="text-grey hover:text-gold">
                       {item.label}
                     </span>
@@ -60,9 +57,10 @@ export default function Filter({
             </motion.ul>
           )}
         </AnimatePresence>
+
         <div
           onClick={() => onFilterVisibleChange(!filterVisible)}
-          className="w-[96px] h-[34px] ml-auto hover:bg-gold-dark cursor-pointer bg-gold flex justify-center items-center gap-1 text-white"
+          className={buttonClassName}
         >
           <FaFilter size={18} />
           <span>Filtro</span>
