@@ -48,15 +48,17 @@ const Banner = () => {
                 >
                     {
                         bannerImages.mobile.map((image, index) => {
-                            return <SwiperSlide key={index} className='relative w-full h-[800px]'
+                            return <SwiperSlide key={index} className='relative w-full h-screen'
                                 style={{ backgroundColor: bannerImages.color[index] }}>
-                                <div className='relative w-full max-w-[460px] aspect-[1/2] mx-auto'>
+                                <div className='relative w-full max-w-[460px] h-screen mx-auto'>
                                     <Image
                                         alt='image'
                                         src={image}
                                         fill
                                         priority={index === 0}
+                                        className='object-cover object-bottom'
                                         sizes='460px'
+                                        quality={100}
                                     />
                                 </div>
                             </SwiperSlide>
@@ -88,6 +90,7 @@ const Banner = () => {
                                     fill
                                     priority={index === 0}
                                     sizes="(min-width: 1024px) 100vw"
+                                    quality={100}
                                 />
                             </SwiperSlide>
                         })
@@ -97,11 +100,11 @@ const Banner = () => {
 
             {/* 文字区域 */}
             <div className='w-full h-full absolute inset-0 z-10 flex justify-center items-center lg:justify-between lg:px-[160px]'>
-                <div className='flex flex-col items-center lg:items-start gap-4 text-white absolute lg:static top-[300px]'>
+                <div className='flex flex-col items-center lg:items-start gap-4 text-white absolute lg:static top-[300px] bg-black/10 md:bg-transparent p-5'>
                     <span className='text-[14px] leading-[30px] tracking-[5px] lg:text-h4 select-none'>New Colecction</span>
                     <span className='text-6xl lg:text-9xl select-none tracking-[0.2px]'>Snow</span>
                     <span className='text-6xl lg:text-9xl select-none tracking-[0.2px]'>Season</span>
-                    <Button variant="poster" onClick={() => router.push('/productos/nueva-coleccion')} className='w-[194px] h-[68px] flex'>
+                    <Button variant={'form-solid'} onClick={() => router.push('/productos/nueva-coleccion')} className='w-[194px] h-[50px] border border-black/10 shadow-lg flex'>
                         <span className='text-sm lg:text-[14px] leading-[28px] m-auto'>Ver lo nuevo</span>
                     </Button>
                 </div>
