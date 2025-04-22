@@ -35,7 +35,7 @@ const ProductDisplay = ({
       onMouseLeave={() => setIsHovered(false)}
     >
       <Link
-        href={`/product/${product._id}`}
+        href={`/producto/${product._id}`}
         className="block w-full h-full relative"
       >
         <Image

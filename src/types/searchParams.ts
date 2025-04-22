@@ -1,5 +1,6 @@
 export type Params = Promise<{
   slug: string;
+  id: string;
 
   productName?: string;
   categorie?: string;

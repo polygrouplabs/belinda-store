@@ -1,21 +1,22 @@
+import { Toaster } from "sonner";
+
 import NavBar from "@/components/app/NavBar";
 import Footer from "@/components/app/Footer";
 import WhatsAppButton from "@/components/app/WhatsAppButton";
 import Header from "@/components/app/Header";
 export default function MainLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return (
-        <div className="flex min-h-screen flex-col">
-            <Header />
-            <NavBar />
-            <main className="flex-1">
-                {children}
-            </main>
-            <Footer />
-            <WhatsAppButton />
-        </div>
-    );
+  return (
+    <div className="flex min-h-screen flex-col">
+      <Header />
+      <NavBar />
+      <main className="flex-1">{children}</main>
+      <Toaster position={"bottom-center"} />
+      <Footer />
+      <WhatsAppButton />
+    </div>
+  );
 }

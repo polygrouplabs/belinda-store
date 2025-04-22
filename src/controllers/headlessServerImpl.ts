@@ -65,9 +65,12 @@ export class HeadlessServerImpl {
     return productsResponse.items as productInterface[];
   }
 
-  async getProductBySlug(slug: string): Promise<productInterface | undefined> {
+  async getProductByEq(
+    slug: string,
+    typeEq: "slug" | "_id"
+  ): Promise<productInterface | undefined> {
     await this.ensureInitialized();
-    const productResponse = await this.productsQuery.eq("slug", slug).find();
+    const productResponse = await this.productsQuery.eq(typeEq, slug).find();
     const product = productResponse.items[0] as productInterface;
     return product;
   }

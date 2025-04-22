@@ -1,25 +1,21 @@
-"use client";
 import "swiper/css";
 import "./index.css";
 import "swiper/css/navigation";
 import Image from "next/image";
+import DOMPurify from "isomorphic-dompurify";
+import { HeadlessServerImpl } from "@/controllers/headlessServerImpl";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import {
+  productInterface,
+  productMediaItemInterface,
+  productOptionInterface,
+  productVariantInterface,
+} from "@/interfaces/product";
+import { productMediaInterface } from "@/interfaces/product";
+import { Params } from "@/types/searchParams";
 
 import { TbTie } from "react-icons/tb";
-import { Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import { Button } from "@/components/ui/button";
-import { QuantityCounter } from "@/components/app/QuantityCounter";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   Accordion,
   AccordionContent,
@@ -41,20 +37,12 @@ import {
   SheetTrigger,
   SheetDescription,
 } from "@/components/ui/sheet";
+import Add from "@/components/app/product/detail/Add";
+import ProductImages from "@/components/app/product/detail/ProductImages";
+import ProductImageSlide from "@/components/app/product/detail/ProductImageSlide";
+import CustomizeProduct from "@/components/app/product/detail/CustomizeProduct";
 
-// 模拟商品数据
-const product = {
-  id: "1",
-  name: "Vestido con espalda descubierta",
-  price: 206910,
-  images: ["/IMG-1.jpg", "/IMG-Buy-1.jpg", "/IMG-Buy-2.jpg"],
-  sizes: ["XS", "S", "M", "L", "XL"],
-  colors: ["#ded2bd"],
-  description: "Ref: VFPD-1421",
-  originalPrice: 206910,
-};
-
-// 尺码表数据
+// * SIZES GUIDE
 const sizeGuideData = [
   { size: "XS", bust: 84, hip: 93 },
   { size: "S", bust: 88, hip: 96 },
@@ -63,141 +51,63 @@ const sizeGuideData = [
   { size: "XL", bust: 100, hip: 108 },
 ];
 
-export default function ProductPage() {
-  const [selectedSize, setSelectedSize] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  const router = useRouter();
+export default async function ProductPage(props: { params: Params }) {
+  const HeadlessServerImplInstance = new HeadlessServerImpl();
+
+  const params = await props.params;
+  const productID = params.id;
+
+  const decodeProductSlug = decodeURIComponent(productID);
+
+  const product: productInterface | undefined =
+    await HeadlessServerImplInstance.getProductByEq(decodeProductSlug, "_id");
+
+  const productMedia = product?.media as productMediaInterface;
+
+  const productMediaItems: productMediaItemInterface[] =
+    productMedia?.items || [];
+
+  const productVariants: productVariantInterface[] = product?.variants || [];
+  const productOptions: productOptionInterface[] =
+    product?.productOptions || [];
 
   return (
-    <div className="container mx-auto py-8">
+    <section className="container mx-auto py-8">
       <div className="space-y-2 px-4 lg:hidden">
-        <h1 className="text-h3 font-bold">{product.name}</h1>
-        <p className="text-grey text-h5">{product.description}</p>
+        <h1 className="text-h3 font-bold">{product?.name}</h1>
+        <p className="text-grey text-h5">{product?.description}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[600px_1fr] lg:gap-8">
-        {/* 移动端轮播图 */}
-        <div className="relative my-10 lg:hidden">
-          <Swiper
-            modules={[Navigation]}
-            navigation
-            loop={true}
-            className="aspect-[3/4] w-full product-swiper"
-          >
-            {product.images.map((image, index) => (
-              <SwiperSlide key={index}>
-                <div className="relative w-full h-full">
-                  <Image
-                    src={image}
-                    alt={product.name}
-                    fill
-                    className="object-cover"
-                    sizes="100vw"
-                    priority={index === 0}
-                  />
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+        {productMedia.items && (
+          <>
+            <ProductImageSlide items={productMediaItems} />
+            <ProductImages items={productMediaItems} />
+          </>
+        )}
 
-        {/* 桌面端图片网格 */}
-        <div className="hidden lg:block h-[80vh] overflow-y-auto pr-4">
-          <div className="grid grid-cols-2 gap-4">
-            {product.images.map((image, index) => (
-              <div
-                key={index}
-                className={`relative ${
-                  index === 0 ? "col-span-2" : "col-span-1"
-                }`}
-              >
-                <div className="relative aspect-[3/4] w-full">
-                  <Image
-                    src={image}
-                    alt={`${product.name} - 图片 ${index + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 1024px) 50vw, 100vw"
-                    priority={index === 0}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 右侧商品信息 */}
+        {/* * PRODUCT INFO */}
         <div className="space-y-6 px-4">
           <div className="space-y-2 hidden lg:block">
-            <h1 className="text-h3 font-bold">{product.name}</h1>
-            <p className="text-grey text-h5">{product.description}</p>
-          </div>
-          <div className="flex items-center gap-2 text-h3">
-            <span className="text-grey line-through">
-              $ {product.originalPrice.toLocaleString()}
-            </span>
-            <span className="font-bold">
-              $ {product.price.toLocaleString()}
-            </span>
+            <h1 className="text-h3 font-bold">{product?.name}</h1>
+            <p className="text-grey text-h5">{product?.description}</p>
           </div>
 
-          {/* 免运费提示 */}
-          <div className="bg-pink rounded-md text-white p-2 text-h6">
-            <span className="font-bold">ENVÍO GRATIS</span> POR COMPRAS
-            SUPERIORES A <span className="font-bold">$ 200.000</span>
-          </div>
-
-          {/* 颜色选择 */}
-          <div className="space-y-2">
-            <span className="text-h6">Color:</span>
-            <div className="flex gap-2">
-              {product.colors.map((color, index) => (
-                <div
-                  key={index}
-                  className="w-8 h-8 rounded-full border-2 border-grey cursor-pointer"
-                  style={{ backgroundColor: color }}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* 尺码选择 */}
-          <div className="space-y-2">
-            <span className="text-h6">Talla:</span>
-            <Select value={selectedSize} onValueChange={setSelectedSize}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Seleccionar talla" />
-              </SelectTrigger>
-              <SelectContent>
-                {product.sizes.map((size) => (
-                  <SelectItem key={size} value={size}>
-                    {size}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* 数量选择 */}
-          <div className="space-y-2">
-            <span className="text-h6">Cantidad:</span>
-            <QuantityCounter
-              className="w-[180px]"
-              value={quantity}
-              onValueChange={setQuantity}
+          {productVariants && productOptions ? (
+            <CustomizeProduct
+              productID={productID}
+              productVariants={productVariants}
+              productOptions={productOptions}
             />
-          </div>
+          ) : (
+            <Add
+              productId={productID}
+              variantId="00000000-0000-0000-0000-000000000000"
+              stockNumber={product?.stock?.quantity || 0}
+            />
+          )}
 
-          {/* 购买按钮 */}
-          <Button
-            onClick={() => router.push("/purchase")}
-            variant="form-solid"
-            className="w-full h-[68px]"
-          >
-            Comprar
-          </Button>
-
-          {/* 尺码指南 - 移动端使用Sheet */}
+          {/* Guia de tallas */}
           <div className="lg:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -224,7 +134,6 @@ export default function ProductPage() {
                   </p>
                 </SheetHeader>
 
-                {/* 尺码表格 */}
                 <div className="mt-6">
                   <div className="bg-grey-light">
                     <div className="grid grid-cols-3 font-bold py-3 text-h5">
@@ -246,7 +155,6 @@ export default function ProductPage() {
                   ))}
                 </div>
 
-                {/* 尺码指南图片 */}
                 <div className="mt-4">
                   <Image
                     src="/size.png"
@@ -261,7 +169,7 @@ export default function ProductPage() {
             </Sheet>
           </div>
 
-          {/* 尺码指南 - PC端使用Dialog */}
+          {/* Dialogo */}
           <div className="hidden lg:block">
             <Dialog>
               <DialogTrigger asChild>
@@ -324,51 +232,27 @@ export default function ProductPage() {
             </Dialog>
           </div>
 
-          {/* 添加Accordion */}
+          <div className="h-[2px] bg-gray-200" />
+
           <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>Detalles</AccordionTrigger>
-              <AccordionContent>
-                • Vestido corto
-                <br />
-                • Escote en V<br />
-                • Manga larga
-                <br />
-                • Espalda descubierta
-                <br />
-                • Cierre con cremallera invisible en costado
-                <br />• Forro interior
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-2">
-              <AccordionTrigger>Materiales y cuidados</AccordionTrigger>
-              <AccordionContent>
-                • 100% Poliéster
-                <br />
-                • Lavar a mano
-                <br />
-                • No usar secadora
-                <br />
-                • Planchar a baja temperatura
-                <br />• No lavar en seco
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-3">
-              <AccordionTrigger>Envío y devoluciones</AccordionTrigger>
-              <AccordionContent>
-                • Envío estándar: 3-5 días hábiles
-                <br />
-                • Envío express: 1-2 días hábiles
-                <br />
-                • Devoluciones gratuitas dentro de los 30 días
-                <br />• Cambios sin costo en tienda
-              </AccordionContent>
-            </AccordionItem>
+            {product?.additionalInfoSections?.map((info, i) => {
+              return (
+                <AccordionItem key={i} value={`item-${i}`}>
+                  <AccordionTrigger>{info.title}</AccordionTrigger>
+                  <AccordionContent>
+                    <p
+                      className="text-gray-500 px-2 overflow-auto"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(info.description ?? ""),
+                      }}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+              );
+            })}
           </Accordion>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
