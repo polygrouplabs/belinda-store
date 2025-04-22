@@ -1,17 +1,42 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { IoLogoWhatsapp } from "react-icons/io5";
 
 const WhatsAppButton = () => {
-    return (
-        <Link
-            href="https://wa.me/你的电话号码"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="fixed bottom-20 right-5 z-50 bg-[#25D366] p-2 rounded-full shadow-lg hover:bg-[#147036] transition-transform duration-300"
-        >
-            <IoLogoWhatsapp size={28} className="text-white" />
-        </Link>
-    );
+  const [message, setMessage] = useState(false);
+
+  const whatsapp = "";
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage(true);
+    }, 4000);
+
+    setTimeout(() => {
+      setMessage(false);
+    }, 32000);
+  }, []);
+
+  return (
+    <>
+      {message && (
+        <div className="message__container">
+          <p>¿Necesitas ayuda? 📲</p>
+        </div>
+      )}
+
+      <Link
+        href={`https://api.whatsapp.com/send?phone=+57${whatsapp}&text=Saludos, quiero obtener información acerca de un producto...`}
+        target={"_blank"}
+        rel="noopener noreferrer"
+        className="whatsapp__float"
+      >
+        <IoLogoWhatsapp size={30} className="text-black" />
+      </Link>
+    </>
+  );
 };
 
 export default WhatsAppButton;
