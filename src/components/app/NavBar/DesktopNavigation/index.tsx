@@ -1,19 +1,22 @@
-import Logo from "@/assets/Belinda-text-Icon-Colorway-Gold.svg";
 import Link from "next/link";
 import { UIState } from "../types";
-import ShoppingCart from "../ShoppingCart";
+
 import DesktopSearch from "./DesktopSearch";
 import DesktopMenu from "./DesktopMenu";
+
+import Logo from "@/assets/Belinda-text-Icon-Colorway-Gold.svg";
 import { useScrollPosition } from "@/hooks/handlers/useScrollPosition";
 
 interface DesktopNavigationProps {
   uiState: UIState;
   setUiState: (state: UIState | ((prev: UIState) => UIState)) => void;
+  children: React.ReactNode;
 }
 
 export function DesktopNavigation({
   uiState,
   setUiState,
+  children,
 }: DesktopNavigationProps) {
   const { scrollValue } = useScrollPosition();
 
@@ -33,7 +36,7 @@ export function DesktopNavigation({
         <div className="flex flex-1 items-center gap-6">
           <DesktopMenu uiState={uiState} setUiState={setUiState} />
           <DesktopSearch uiState={uiState} setUiState={setUiState} />
-          <ShoppingCart />
+          {children}
         </div>
       </div>
     </nav>

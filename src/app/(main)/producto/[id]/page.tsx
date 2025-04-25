@@ -67,7 +67,7 @@ export default async function ProductPage(props: { params: Params }) {
     product?.productOptions || [];
 
   return (
-    <section className="container mx-auto py-10 mt-20 sm:mt-40">
+    <section className="container mx-auto py-10 mt-20 sm:mt-32">
       <div className="space-y-2 px-4 lg:hidden">
         <h1 className="text-h3 font-bold">{product?.name}</h1>
         <p className="text-grey text-h5">{product?.description}</p>

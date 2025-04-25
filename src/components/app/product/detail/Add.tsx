@@ -2,11 +2,18 @@
 
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
-import { useHeadlessClient } from "@/hooks/sdk/useHeadlessClient";
 
-// import { useCartStore } from "@/context/useCartStore";
 import { Button } from "@/components/ui/button";
 import { QuantityCounter } from "@/components/app/QuantityCounter";
+
+import useCart from "@/hooks/cart/useCart";
+import { useCartStore } from "@/hooks/cart/useCartStore";
+
+/*
+    className={`${
+    disabled ? "cursor-not-allowed opacity-75" : ""
+    } w-[140px] rounded-full disabled:opacity-75 disabled:cursor-not-allowed disabled:ring-0`}
+*/
 
 const Add = ({
   productId,
@@ -21,8 +28,8 @@ const Add = ({
 }) => {
   const [quantity, setQuantity] = useState<number>(1);
 
-  const headlessClient = useHeadlessClient();
-  // const { addItem, isLoading } = useCartStore();
+  const { headlessClient } = useCart();
+  const { addItem, isLoading } = useCartStore();
 
   const handleQuantity = (type: "i" | "d") => {
     if (type === "d" && quantity > 1) {
@@ -43,16 +50,16 @@ const Add = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center">
         <h4 className="font-medium">Elige una cantidad</h4>
         {stockNumber < 1 ? (
           <span className="flex items-center w-max text-[.6rem] text-white bg-pink px-4 rounded-lg">
             Producto sin stock
           </span>
         ) : (
-          <div className="text-xs mb-2">
-            Quedan <br />{" "}
-            <span className="text-orange-500">{stockNumber} productos</span>{" "}
+          <div className="text-xs">
+            Quedan {" "}
+            <span className="text-pink-500">{stockNumber} productos</span>{" "}
             restantes!
           </div>
         )}
@@ -77,15 +84,7 @@ const Add = ({
               toast.info("No hay stock disponible para este producto");
               return;
             }
-          }}
-          variant={"default"}
-          className="w-[150px] h-[40px]"
-        >
-          Agregar al carrito
-        </Button>
 
-        {/* <button
-          onClick={() => {
             if (disabled) {
               toast.info("Seleccione las opciones del producto a comprar");
 
@@ -95,12 +94,11 @@ const Add = ({
             addItem(headlessClient, productId, variantId, quantity);
           }}
           disabled={isLoading || stockNumber < 1}
-          className={`${
-            disabled ? "cursor-not-allowed opacity-75" : ""
-          } w-[140px] rounded-full disabled:opacity-75 disabled:cursor-not-allowed disabled:ring-0`}
+          variant={"default"}
+          className="w-[150px] h-[40px]"
         >
           Agregar al carrito
-        </button> */}
+        </Button>
       </div>
     </div>
   );

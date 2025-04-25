@@ -57,7 +57,7 @@ export default async function StorePage(props: { searchParams: Params }) {
 
   return (
     <>
-      <div className="container flex flex-col mx-auto max-w-[73rem] px-4 pb-10">
+      <div className="container flex flex-col mx-auto max-w-[73rem] pb-10">
         <div className="flex flex-col items-center text-center max-w-[600px] my-20 mx-auto">
           <h3 className="text-xl lg:text-4xl font-bold">{title}</h3>
           <p

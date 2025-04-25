@@ -2,18 +2,19 @@ import Logo from "@/assets/Belinda-text-Icon-Colorway-Gold.svg";
 import Link from "next/link";
 import MobileSearch from "./MobileSearch";
 import { MobileMenu } from "./MobileMenu";
-import ShoppingCart from "../ShoppingCart";
 import { UIState } from "../types";
 import { useScrollPosition } from "@/hooks/handlers/useScrollPosition";
 
 interface MobileNavigationProps {
   uiState: UIState;
   setUiState: (state: UIState | ((prev: UIState) => UIState)) => void;
+  children?: React.ReactNode;
 }
 
 export function MobileNavigation({
   uiState,
   setUiState,
+  children,
 }: MobileNavigationProps) {
   const { scrollValue } = useScrollPosition();
 
@@ -32,7 +33,7 @@ export function MobileNavigation({
         </Link>
         <div className="flex items-center gap-4">
           <MobileSearch uiState={uiState} setUiState={setUiState} />
-          <ShoppingCart />
+          {children}
           <MobileMenu uiState={uiState} setUiState={setUiState} />
         </div>
       </div>

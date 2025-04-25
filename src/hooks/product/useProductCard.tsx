@@ -19,10 +19,6 @@ const useProductCard = (product: productInterface): UseProductCardResult => {
   >(null);
 
   useEffect(() => {
-    if (product.name === "Vestido Negro") {
-      console.log("PRODUCT CARD =>", product);
-    }
-
     const isDiscounted =
       product.priceData?.price !== product.priceData?.discountedPrice;
     setIsOnSale(isDiscounted);
