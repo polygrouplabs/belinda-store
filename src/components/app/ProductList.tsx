@@ -5,10 +5,12 @@ interface ProductListProps {
   products: productInterface[];
 }
 
+// * mt-8 gap-8 lg:gap-6 lg:after:content-[''] lg:after:basis-[312px]
+
 export default function ProductList({ products }: ProductListProps) {
   return (
     <div className="container mx-auto my-10 max-w-[73rem] px-4">
-      <div className="flex flex-wrap mt-8 justify-center lg:justify-between gap-8 lg:gap-6 lg:after:content-[''] lg:after:basis-[312px]">
+      <div className="grid mx-auto grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:flex lg:flex-wrap lg:justify-evenly lg:items-center">
         {products.map((product) => (
           <ProductCard product={product} key={product._id} />
         ))}

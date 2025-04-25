@@ -19,7 +19,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   } = useProductCard(product);
 
   return (
-    <div className="w-fit block relative">
+    <div className="w-full lg:w-fit block relative  ">
       <div className="absolute left-0 top-6 z-20">
         {isOnSale && (
           <div className="bg-red text-white text-xs px-2 py-1 mb-2">OFERTA</div>
@@ -33,7 +33,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
       <ProductDisplay
         product={product}
-        className="w-[312px] h-[400px]"
+        className="w-full h-[240px] lg:w-[312px] lg:h-[400px]"
         sizes="312px"
       />
 
