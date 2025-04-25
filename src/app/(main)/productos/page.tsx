@@ -10,7 +10,7 @@ import { collectionsBySlugResponse } from "@/interfaces/collection";
 import { HeadlessServerImpl } from "@/controllers/headlessServerImpl";
 
 import Filter from "@/components/app/Filter";
-import ProductList from "@/components/app/ProductList";
+import ProductList from "@/components/app/product/section/ProductList";
 import Pagination from "@/components/app/pagination/Pagination";
 
 export default async function StorePage(props: { searchParams: Params }) {

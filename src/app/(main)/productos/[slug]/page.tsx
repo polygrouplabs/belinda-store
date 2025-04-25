@@ -12,7 +12,7 @@ import {
 } from "@/interfaces/product";
 import { collectionsBySlugResponse } from "@/interfaces/collection";
 
-import ProductList from "@/components/app/ProductList";
+import ProductList from "@/components/app/product/section/ProductList";
 
 export async function generateMetadata(props: { params: Params }) {
   const params = await props.params;

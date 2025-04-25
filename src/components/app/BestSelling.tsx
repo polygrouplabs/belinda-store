@@ -1,7 +1,7 @@
 import { Roboto } from "next/font/google";
 import { productInterface } from "@/interfaces/product";
 
-import ProductList from "./ProductList";
+import ProductList from "./product/section/ProductList";
 
 const roboto = Roboto({
   subsets: ["latin"],
