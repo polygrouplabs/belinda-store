@@ -1,5 +1,5 @@
 import { productInterface } from "@/interfaces/product";
-import ProductDisplay from "./ProductDisplay";
+import ProductDisplay from "./product/detail/ProductDisplay";
 
 interface newSeriesProps {
   products: productInterface[];

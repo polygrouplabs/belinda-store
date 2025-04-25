@@ -6,7 +6,8 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 import { useState } from "react";
-import { HiOutlineShoppingCart } from "react-icons/hi2";
+import { useRouter } from "next/navigation";
+import { BsFillBagPlusFill } from "react-icons/bs";
 import { productInterface } from "@/interfaces/product";
 import useProductCard from "@/hooks/product/useProductCard";
 
@@ -25,6 +26,8 @@ const ProductDisplay = ({
 }: ProductDisplayProps) => {
   const { isOnSale, ribbonText } = useProductCard(product);
   const [isHovered, setIsHovered] = useState(false);
+
+  const router = useRouter();
 
   // const addToCart = useCartStore((state) => state.addItem);
 
@@ -74,12 +77,14 @@ const ProductDisplay = ({
       )}
 
       <div
-        onClick={() => {}}
+        onClick={() => {
+          router.push(`/producto/${product._id}`);
+        }}
         className={`absolute bottom-0 left-0 right-0 h-[72px] bg-gold cursor-pointer hover:bg-gold-dark transition-opacity duration-300 flex items-center justify-center ${
           isHovered ? "opacity-100" : "opacity-0"
         }`}
       >
-        <HiOutlineShoppingCart size={20} className="text-white" />
+        <BsFillBagPlusFill size={20} className="text-white" />
       </div>
     </div>
   );

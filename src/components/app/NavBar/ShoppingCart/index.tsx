@@ -2,7 +2,7 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetHeader, SheetTitle,
 import { Button } from "@/components/ui/button";
 import { CartItem } from "./CartItem";
 import { useRouter } from "next/navigation";
-import { BsCart } from "react-icons/bs";
+import { RiShoppingBag2Fill } from "react-icons/ri";
 import { useCartStore } from "@/store/cart";
 import { PiTrashLight } from "react-icons/pi";
 
@@ -17,7 +17,7 @@ export default function ShoppingCart() {
                     aria-label="Mi bolsa"
                     className="flex items-center justify-center lg:text-gold-light lg:hover:text-gold relative"
                 >
-                    <BsCart className="w-[26px] h-[26px] lg:w-[22px] lg:h-[22px]" />
+                    <RiShoppingBag2Fill className="w-[30px] h-[30px] lg:w-[22px] lg:h-[22px]" />
                     {items.length > 0 && (
                         <span className="absolute -top-2 -right-2 bg-gold text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
                             {items.length}

@@ -1,6 +1,6 @@
 "use client";
 
-import ProductDisplay from "./ProductDisplay";
+import ProductDisplay from "../detail/ProductDisplay";
 import useProductCard from "@/hooks/product/useProductCard";
 import { productInterface } from "@/interfaces/product";
 
