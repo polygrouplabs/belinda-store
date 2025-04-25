@@ -7,7 +7,6 @@ import { HeadlessServerImpl } from "@/controllers/headlessServerImpl";
 
 import {
   productInterface,
-  productMediaItemInterface,
   productOptionInterface,
   productVariantInterface,
 } from "@/interfaces/product";
@@ -38,8 +37,7 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import Add from "@/components/app/product/detail/Add";
-import ProductImages from "@/components/app/product/detail/ProductImages";
-import ProductImageSlide from "@/components/app/product/detail/ProductImageSlide";
+import HandlerImage from "@/components/app/product/detail/HandlerImage";
 import CustomizeProduct from "@/components/app/product/detail/CustomizeProduct";
 
 // * SIZES GUIDE
@@ -64,9 +62,6 @@ export default async function ProductPage(props: { params: Params }) {
 
   const productMedia = product?.media as productMediaInterface;
 
-  const productMediaItems: productMediaItemInterface[] =
-    productMedia?.items || [];
-
   const productVariants: productVariantInterface[] = product?.variants || [];
   const productOptions: productOptionInterface[] =
     product?.productOptions || [];
@@ -79,12 +74,7 @@ export default async function ProductPage(props: { params: Params }) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[600px_1fr] lg:gap-8">
-        {productMedia.items && (
-          <>
-            <ProductImageSlide items={productMediaItems} />
-            <ProductImages items={productMediaItems} />
-          </>
-        )}
+        {product && productMedia.items && <HandlerImage product={product} />}
 
         {/* * PRODUCT INFO */}
         <div className="space-y-6 px-4">

@@ -8,9 +8,15 @@ import defaultProductImages from "@/assets/images/product_default_image.jpg";
 
 interface ProductImagesSlideProps {
   items: productMediaItemInterface[];
+  isOnSale?: boolean;
+  ribbonText?: string;
 }
 
-export default function ProductImages({ items }: ProductImagesSlideProps) {
+export default function ProductImages({
+  items,
+  isOnSale,
+  ribbonText,
+}: ProductImagesSlideProps) {
   return (
     <div className="hidden lg:block h-[80vh] overflow-y-auto pr-4">
       <div className="grid grid-cols-2 gap-4">
@@ -29,6 +35,21 @@ export default function ProductImages({ items }: ProductImagesSlideProps) {
                 priority={index === 0}
               />
             </div>
+
+            {index === 0 && (
+              <div className="absolute left-0 top-6 z-20">
+                {isOnSale && (
+                  <div className="bg-red text-white text-[10px] px-2 py-1 mb-2">
+                    OFERTA
+                  </div>
+                )}
+                {ribbonText && (
+                  <div className="bg-black text-white text-[10px] px-2 py-1">
+                    {ribbonText}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>

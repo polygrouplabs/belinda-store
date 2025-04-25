@@ -26,7 +26,7 @@ export function MobileNavigation({
       <div className="h-full flex container px-4 mx-auto justify-between items-center">
         <Link
           href="/"
-          className="w-[150px] h-[82px] overflow-hidden flex items-center justify-center"
+          className="w-[150px] h-[auto] flex items-center justify-center"
         >
           <Logo />
         </Link>
