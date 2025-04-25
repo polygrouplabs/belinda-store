@@ -10,7 +10,7 @@ interface ProductListProps {
 export default function ProductList({ products }: ProductListProps) {
   return (
     <div className="container mx-auto my-10 max-w-[73rem] px-4">
-      <div className="grid mx-auto grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:flex lg:flex-wrap lg:justify-evenly lg:items-center">
+      <div className="grid mx-auto gap-4 grid-cols-2 md:grid-cols-4 lg:grid-cols-3">
         {products.map((product) => (
           <ProductCard product={product} key={product._id} />
         ))}

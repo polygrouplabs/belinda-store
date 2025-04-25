@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { IoLogoInstagram } from "react-icons/io5";
+import { IoLogoInstagram, IoLogoTiktok } from "react-icons/io5";
 import Link from "next/link";
 
 const Footer = () => {
@@ -137,6 +137,14 @@ const Footer = () => {
                 className="bg-black rounded-full p-2 hover:opacity-80 transition-opacity"
               >
                 <IoLogoInstagram size={40} className="text-white" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@bsbelindastore"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-black rounded-full p-2 hover:opacity-80 transition-opacity"
+              >
+                <IoLogoTiktok size={40} className="text-white" />
               </a>
             </div>
           </div>

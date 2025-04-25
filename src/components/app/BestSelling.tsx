@@ -16,14 +16,15 @@ interface bestSellingProps {
 
 const BestSelling = ({ title, products }: bestSellingProps) => {
   return (
-    <section id="main">
-      <div className="h-[150px] hidden lg:flex items-center justify-center mb-8">
-        <h2
-          className={`text-5xl font-bold tracking-wider text-grey-dark text-center ${roboto.className}`}
-        >
-          {title}
-        </h2>
-      </div>
+    <section
+      id="main"
+      className="min-h-[100vh] flex flex-col justify-center items-center my-20"
+    >
+      <h2
+        className={`text-3xl font-bold tracking-wider text-grey-dark text-center md:text-5xl ${roboto.className}`}
+      >
+        {title}
+      </h2>
       <ProductList products={products} />
     </section>
   );
