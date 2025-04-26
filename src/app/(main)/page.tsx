@@ -6,24 +6,25 @@ import NewSeries from "@/components/app/NewSeries";
 import { HeadlessServerImpl } from "@/controllers/headlessServerImpl";
 import {
   NEXT_PUBLIC_BEST_SELLERS_ID,
-  NEXT_PUBLIC_NEW_COLLECTIONS_ID,
+  NEXT_PUBLIC_ACCESORY_ID,
 } from "@/utils/env";
+import About from "@/components/app/About/About";
 
 const env = {
   bestSellers: NEXT_PUBLIC_BEST_SELLERS_ID!,
-  newCollection: NEXT_PUBLIC_NEW_COLLECTIONS_ID!,
+  accesories: NEXT_PUBLIC_ACCESORY_ID!,
 };
 
 export default async function Page() {
   const HeadlessServerImplInstance = new HeadlessServerImpl();
 
-  const [bestSellingProducts, newCollectionProducts] = await Promise.all([
+  const [bestSellingProducts, accesoriesProducts] = await Promise.all([
     await HeadlessServerImplInstance.getProductsByCollectionId(
       env.bestSellers,
       8
     ),
     await HeadlessServerImplInstance.getProductsByCollectionId(
-      env.newCollection,
+      env.accesories,
       5
     ),
   ]);
@@ -31,9 +32,10 @@ export default async function Page() {
   return (
     <>
       <Banner />
+      <About />
       <BestSelling title="Más vendidos" products={bestSellingProducts} />
       <Poster />
-      <NewSeries products={newCollectionProducts} />
+      <NewSeries products={accesoriesProducts} />
     </>
   );
 }

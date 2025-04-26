@@ -11,8 +11,7 @@ const NewSeries = ({ products }: newSeriesProps) => {
       <div className="relative w-full h-[250px] bg-gold-50">
         <div className="absolute inset-0 flex items-center justify-center">
           <h2 className="text-2xl tracking-wider flex flex-col lg:flex-row items-center lg:font-bold text-black text-center">
-            <span>DESCUBRE LA</span>
-            <span>NUEVA COLECCIÓN</span>
+            DESCUBRE NUESTROS ACCESORIOS
           </h2>
         </div>
       </div>
