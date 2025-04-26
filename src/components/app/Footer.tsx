@@ -1,6 +1,13 @@
 import Image from "next/image";
-import { IoLogoInstagram, IoLogoTiktok } from "react-icons/io5";
 import Link from "next/link";
+
+import pseLogo from "@/assets/images/pse-logo.png";
+import efectyLogo from "@/assets/images/efecty-logo.png";
+
+import { FaCcVisa } from "react-icons/fa";
+import { SiMercadopago } from "react-icons/si";
+import { FaCcMastercard } from "react-icons/fa";
+import { IoLogoInstagram, IoLogoTiktok } from "react-icons/io5";
 
 const Footer = () => {
   return (
@@ -10,9 +17,9 @@ const Footer = () => {
           {/* Logo */}
           <div className="hidden lg:block w-[300px]">
             <Image
-              src="/Belinda-Logo-Colorway-Gold.svg"
+              src="/Belinda-text-Icon-Colorway-Gold-white.png"
               alt="Belinda Store"
-              width={300}
+              width={250}
               height={100}
               className="mb-8"
             />
@@ -86,6 +93,26 @@ const Footer = () => {
                 >
                   Tratamiento de datos
                 </Link>
+              </div>
+              <h3 className="text-sm font-medium">Métodos de pago</h3>
+              <div className="flex flex-wrap items-center gap-4">
+                <Image
+                  width={60}
+                  height={20}
+                  sizes="w-[80px] h-auto"
+                  src={pseLogo.src}
+                  alt="pse logo"
+                />
+                <SiMercadopago size={30} />
+                <FaCcVisa size={30} />
+                <FaCcMastercard size={30} />
+                <Image
+                  width={65}
+                  height={20}
+                  sizes="w-[80px] h-auto"
+                  src={efectyLogo.src}
+                  alt="efecty logo"
+                />
               </div>
             </div>
           </div>
