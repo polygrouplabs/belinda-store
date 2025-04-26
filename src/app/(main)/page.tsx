@@ -31,7 +31,7 @@ export default async function Page() {
   return (
     <>
       <Banner />
-      <BestSelling title="MÁS VENDIDOS" products={bestSellingProducts} />
+      <BestSelling title="Más vendidos" products={bestSellingProducts} />
       <Poster />
       <NewSeries products={newCollectionProducts} />
     </>

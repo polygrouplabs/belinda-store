@@ -7,7 +7,7 @@ const Footer = () => {
     <footer className="bg-black text-white py-12">
       <div className="container mx-auto px-4">
         <div className="lg:flex lg:justify-between">
-          {/* Logo 区域 */}
+          {/* Logo */}
           <div className="hidden lg:block w-[300px]">
             <Image
               src="/Belinda-Logo-Colorway-Gold.svg"
@@ -25,14 +25,14 @@ const Footer = () => {
               <h3 className="text-sm font-medium">Nuestras tiendas</h3>
               <div className="space-y-4">
                 <div>
-                  <p className="font-medium">TIENDA BOGOTA:</p>
+                  <p className="font-medium">TIENDA BOGOTA</p>
                   <p className="text-sm text-gray-400">
                     CC Babilonia local 118
                   </p>
                   <p className="text-sm text-gray-400">Show room Local 401.</p>
                 </div>
                 <div>
-                  <p className="font-medium">TIENDA CALI:</p>
+                  <p className="font-medium">TIENDA CALI</p>
                   <p className="text-sm text-gray-400">CC EL TESORO</p>
                   <p className="text-sm text-gray-400">Local 903 E</p>
                 </div>
@@ -78,43 +78,13 @@ const Footer = () => {
                   href="#"
                   className="block text-sm text-gray-400 hover:text-gold"
                 >
-                  whatsapp
-                </Link>
-                <Link
-                  href="#"
-                  className="block text-sm text-gray-400 hover:text-gold"
-                >
                   Política de cambio, garantía, retracto y reversión
                 </Link>
                 <Link
                   href="#"
                   className="block text-sm text-gray-400 hover:text-gold"
                 >
-                  ¿Cómo comprar?
-                </Link>
-                <Link
-                  href="#"
-                  className="block text-sm text-gray-400 hover:text-gold"
-                >
-                  Política de privacidad
-                </Link>
-                <Link
-                  href="#"
-                  className="block text-sm text-gray-400 hover:text-gold"
-                >
                   Tratamiento de datos
-                </Link>
-                <Link
-                  href="#"
-                  className="block text-sm text-gray-400 hover:text-gold"
-                >
-                  Política de cookies
-                </Link>
-                <Link
-                  href="#"
-                  className="block text-sm text-gray-400 hover:text-gold"
-                >
-                  Recogida en tienda
                 </Link>
               </div>
             </div>
