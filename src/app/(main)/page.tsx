@@ -1,7 +1,7 @@
 import Banner from "@/components/app/Banner";
 import BestSelling from "@/components/app/BestSelling";
 import Poster from "@/components/app/Poster";
-import NewSeries from "@/components/app/NewSeries";
+import Categories from "@/components/app/categories/Categories";
 
 import { HeadlessServerImpl } from "@/controllers/headlessServerImpl";
 import {
@@ -35,7 +35,7 @@ export default async function Page() {
       <About />
       <BestSelling title="Más vendidos" products={bestSellingProducts} />
       <Poster />
-      <NewSeries products={accesoriesProducts} />
+      <Categories products={accesoriesProducts} />
     </>
   );
 }

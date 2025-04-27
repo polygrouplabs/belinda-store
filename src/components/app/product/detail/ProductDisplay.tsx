@@ -7,15 +7,19 @@ import { cn } from "@/lib/utils";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { BsFillBagPlusFill } from "react-icons/bs";
+import { /* BsFillBagPlusFill */ BsEye } from "react-icons/bs";
 import { productInterface } from "@/interfaces/product";
-import useProductCard from "@/hooks/product/useProductCard";
+import { products } from "@wix/stores";
 
 interface ProductDisplayProps {
   className?: string;
   sizes?: string;
   product: productInterface;
   showBadge?: boolean;
+
+  stock?: products.InventoryStatus;
+  isOnSale?: boolean;
+  ribbonText?: string | undefined;
 }
 
 const ProductDisplay = ({
@@ -23,10 +27,11 @@ const ProductDisplay = ({
   className,
   sizes = "100vw",
   showBadge = false,
+  stock,
+  isOnSale,
+  ribbonText,
 }: ProductDisplayProps) => {
-  const { isOnSale, ribbonText } = useProductCard(product);
   const [isHovered, setIsHovered] = useState(false);
-
   const router = useRouter();
 
   // const addToCart = useCartStore((state) => state.addItem);
@@ -62,18 +67,26 @@ const ProductDisplay = ({
         )}
       </Link>
       {showBadge && (
-        <div className="absolute left-0 top-6 z-20">
-          {isOnSale && (
-            <div className="bg-red text-white text-[10px] px-2 py-1 mb-2">
-              OFERTA
+        <>
+          <div className="absolute left-0 top-0 z-20">
+            {isOnSale && (
+              <div className="bg-red text-white text-xs px-2 py-1 mb-2">
+                OFERTA
+              </div>
+            )}
+            {ribbonText && (
+              <div className="bg-black text-white text-xs px-2 py-1">
+                {ribbonText}
+              </div>
+            )}
+          </div>
+
+          {stock === products.InventoryStatus.OUT_OF_STOCK && (
+            <div className="bg-red text-white text-xs px-2 py-1 absolute right-0 top-0 z-[20]">
+              SIN STOCK
             </div>
           )}
-          {ribbonText && (
-            <div className="bg-black text-white text-[10px] px-2 py-1">
-              {ribbonText}
-            </div>
-          )}
-        </div>
+        </>
       )}
 
       <div
@@ -84,7 +97,7 @@ const ProductDisplay = ({
           isHovered ? "opacity-100" : "opacity-0"
         }`}
       >
-        <BsFillBagPlusFill size={20} className="text-white" />
+        <BsEye size={30} className="text-white" />
       </div>
     </div>
   );

@@ -8,3 +8,4 @@ export type productMediaInterface = products.Media;
 export type productMediaItemInterface = products.MediaItem;
 export type productVariantInterface = products.Variant;
 export type productOptionInterface = products.ProductOption;
+export type inventoryStatues = products.InventoryStatus;

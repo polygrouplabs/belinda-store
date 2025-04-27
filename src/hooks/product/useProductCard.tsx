@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { productInterface } from "@/interfaces/product";
+import { inventoryStatues, productInterface } from "@/interfaces/product";
 import { handleFormatValue } from "@/utils/handle";
 
 interface UseProductCardResult {
+  stock: inventoryStatues | undefined;
   isOnSale: boolean;
   formattedPrice: string | null;
   formattedDiscountedPrice: string | null;
@@ -18,10 +19,16 @@ const useProductCard = (product: productInterface): UseProductCardResult => {
     string | null
   >(null);
 
+  const [stock, setStock] = useState<inventoryStatues | undefined>(undefined);
+
   useEffect(() => {
     const isDiscounted =
       product.priceData?.price !== product.priceData?.discountedPrice;
     setIsOnSale(isDiscounted);
+
+    const thisStock: inventoryStatues | undefined =
+      product.stock?.inventoryStatus;
+    setStock(thisStock);
 
     if (product.priceData) {
       setFormattedPrice(handleFormatValue(product.priceData.price!));
@@ -31,13 +38,15 @@ const useProductCard = (product: productInterface): UseProductCardResult => {
         );
       }
     }
-  }, [product]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const ribbonText = product.ribbon?.toUpperCase();
   const brandName = product.brand?.split(" ")[0];
   const currency = product.priceData?.currency?.toUpperCase();
 
   return {
+    stock,
     isOnSale,
     formattedPrice,
     formattedDiscountedPrice,

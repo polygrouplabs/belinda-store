@@ -1,17 +1,17 @@
 import { productInterface } from "@/interfaces/product";
-import ProductDisplay from "./product/detail/ProductDisplay";
+import ProductDisplay from "../product/detail/ProductDisplay";
 
 interface newSeriesProps {
   products: productInterface[];
 }
 
-const NewSeries = ({ products }: newSeriesProps) => {
+export default function Categories({ products }: newSeriesProps) {
   return (
     <>
       <div className="relative w-full h-[250px] bg-gold-50">
         <div className="absolute inset-0 flex items-center justify-center">
           <h2 className="text-2xl tracking-wider flex flex-col lg:flex-row items-center lg:font-bold text-black text-center">
-            DESCUBRE NUESTROS ACCESORIOS
+            NUESTRAS CATEGORIAS
           </h2>
         </div>
       </div>
@@ -39,6 +39,4 @@ const NewSeries = ({ products }: newSeriesProps) => {
       </div>
     </>
   );
-};
-
-export default NewSeries;
+}

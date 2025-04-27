@@ -95,7 +95,7 @@ const Footer = () => {
                 </Link>
               </div>
               <h3 className="text-sm font-medium">Métodos de pago</h3>
-              <div className="flex flex-wrap items-center gap-4">
+              <div className="flex flex-wrap justify-center md:justify-start items-center gap-4">
                 <Image
                   width={60}
                   height={20}
