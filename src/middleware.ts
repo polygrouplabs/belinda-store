@@ -10,13 +10,6 @@ export const middleware = async (request: NextRequest) => {
     return res;
   }
 
-  console.log(
-    "NEXT_PUBLIC_HEADLESS_ID_CLIENT =>",
-    NEXT_PUBLIC_HEADLESS_ID_CLIENT
-  );
-  console.log("cookies =>", cookies);
-  console.log("request =>", res);
-
   const headlessClient = createClient({
     auth: OAuthStrategy({ clientId: NEXT_PUBLIC_HEADLESS_ID_CLIENT! }),
     headers: { "x-wix-client-id": NEXT_PUBLIC_HEADLESS_ID_CLIENT! },

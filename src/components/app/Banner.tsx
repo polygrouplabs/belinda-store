@@ -1,126 +1,173 @@
-"use client"
+"use client";
 
-import Image from 'next/image';
-import { EffectFade, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/autoplay'
-import 'swiper/css/effect-fade'
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { SlSocialInstagram } from 'react-icons/sl';
-import { TfiArrowDown } from 'react-icons/tfi';
-import Link from 'next/link';
-import { Button } from '../ui/button';
-import { useRouter } from 'next/navigation';
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { media } from "@wix/sdk";
 
-const bannerImages = {
-    mobile: [
-        '/Belinda-Banner-Home-Mobile-1.jpg',
-        '/Belinda-Banner-Home-Mobile-2.jpg',
-        '/Belinda-Banner-Home-Mobile-3.jpg',
-        '/Belinda-Banner-Home-Mobile-4.jpg'
-    ],
-    desktop: [
-        '/Belinda-Banner-Home-Deskt-1.jpg',
-        '/Belinda-Banner-Home-Deskt-2.jpg',
-        '/Belinda-Banner-Home-Deskt-3.jpg',
-        '/Belinda-Banner-Home-Deskt-4.jpg',
-    ],
-    color: ['#bbac99', '#c7b3ac', '#d7cab5', '#eee4e2']
-};
+import isotipo from "@/assets/isotipo.png";
 
-const Banner = () => {
-    const router = useRouter();
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/effect-fade";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectFade, Autoplay } from "swiper/modules";
+
+import { Button } from "../ui/button";
+import { TfiArrowDown } from "react-icons/tfi";
+import { SlSocialInstagram } from "react-icons/sl";
+
+import { BannerImage } from "@/interfaces/cms";
+import { useHeroData } from "@/hooks/cms/useHeroData";
+
+export default function Banner() {
+  const router = useRouter();
+
+  const { heroData, loading, error } = useHeroData();
+
+  if (error) {
     return (
-        <div className='relative'>
-            {/* H5端 */}
-            <div className='lg:hidden'>
-                <Swiper
-                    modules={[EffectFade, Autoplay]}
-                    effect="fade"
-                    slidesPerView={1}
-                    allowTouchMove={false}
-                    speed={800}
-                    autoplay={{
-                        delay: 2500,
-                        disableOnInteraction: false,
-                        stopOnLastSlide: false,
-                    }}
-                >
-                    {
-                        bannerImages.mobile.map((image, index) => {
-                            return <SwiperSlide key={index} className='relative w-full h-screen'
-                                style={{ backgroundColor: bannerImages.color[index] }}>
-                                <div className='relative w-full max-w-[460px] h-screen mx-auto'>
-                                    <Image
-                                        alt='image'
-                                        src={image}
-                                        fill
-                                        priority={index === 0}
-                                        className='object-cover object-bottom'
-                                        sizes='460px'
-                                        quality={100}
-                                    />
-                                </div>
-                            </SwiperSlide>
-                        })
-                    }
-                </Swiper>
-            </div>
+      <div className="w-full max-h-[100vh] flex justify-center items-center">
+        <h2>Error: {error}</h2>
+      </div>
+    );
+  }
 
-            {/* PC端 */}
-            <div className='hidden lg:block'>
-                <Swiper
-                    modules={[EffectFade, Autoplay]}
-                    effect="fade"
-                    slidesPerView={1}
-                    allowTouchMove={false}
-                    speed={800}
-                    autoplay={{
-                        delay: 2500,
-                        disableOnInteraction: false,
-                        stopOnLastSlide: false,
-                    }}
-                >
-                    {
-                        bannerImages.desktop.map((image, index) => {
-                            return <SwiperSlide key={index} className='relative w-full aspect-[1440/800]'>
-                                <Image
-                                    alt='image'
-                                    src={image}
-                                    fill
-                                    priority={index === 0}
-                                    sizes="(min-width: 1024px) 100vw"
-                                    quality={100}
-                                />
-                            </SwiperSlide>
-                        })
-                    }
-                </Swiper>
-            </div>
-
-            {/* 文字区域 */}
-            <div className='w-full h-full absolute inset-0 z-10 flex justify-center items-center lg:justify-between lg:px-[160px]'>
-                <div className='flex flex-col items-center lg:items-start gap-4 text-white absolute lg:static top-[300px] bg-black/10 md:bg-transparent p-5'>
-                    <span className='text-[14px] leading-[30px] tracking-[5px] lg:text-h4 select-none'>New Colecction</span>
-                    <span className='text-6xl lg:text-9xl select-none tracking-[0.2px]'>Snow</span>
-                    <span className='text-6xl lg:text-9xl select-none tracking-[0.2px]'>Season</span>
-                    <Button variant={'form-solid'} onClick={() => router.push('/productos/nueva-coleccion')} className='w-[194px] h-[50px] border border-black/10 shadow-lg flex'>
-                        <span className='text-sm lg:text-[14px] leading-[28px] m-auto'>Ver lo nuevo</span>
-                    </Button>
-                </div>
-                <div className='hidden lg:flex flex-col items-center gap-4'>
-                    <span className='text-h6 text-white [writing-mode:vertical-rl] select-none'>Follow us</span>
-                    <Link href='/' className='w-[35px] h-[35px] rounded-full bg-white flex'>
-                        <SlSocialInstagram className='m-auto text-gold' size={20} />
-                    </Link>
-                </div>
-            </div>
-
-            <Link href="#main" className="hidden lg:inline">
-                <TfiArrowDown className='absolute z-10 left-1/2 -translate-x-1/2 bottom-[100px] text-white' size={30} />
-            </Link>
+  return (
+    <div className="relative">
+      {loading ? (
+        <div className="flex justify-center items-center w-full h-[100vh] bg-slate-200 animate-pulse">
+          <Image
+            width={120}
+            height={80}
+            src={isotipo}
+            alt="Isotipo"
+            sizes="w-[120px] h-auto"
+            priority={true}
+          />
         </div>
-    )
-};
+      ) : (
+        <>
+          {/* MOBILE */}
+          <div className="lg:hidden">
+            <Swiper
+              modules={[EffectFade, Autoplay]}
+              effect="fade"
+              slidesPerView={1}
+              allowTouchMove={false}
+              speed={800}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+                stopOnLastSlide: false,
+              }}
+            >
+              {heroData?.mobile.map((bannerIMG: BannerImage, index) => {
+                const color = heroData.colors[index].replace(/'/g, "");
+                const urlIMG = bannerIMG.src;
+                const proccesedIMG = media.getImageUrl(urlIMG);
 
-export default Banner;
+                return (
+                  <SwiperSlide
+                    key={bannerIMG.slug}
+                    className="relative w-full h-screen"
+                    style={{ backgroundColor: color }}
+                  >
+                    <div className="relative w-full max-w-[460px] h-screen mx-auto">
+                      <Image
+                        src={proccesedIMG.url}
+                        alt={bannerIMG.title}
+                        priority={index === 0}
+                        className="object-cover object-bottom"
+                        sizes={`${bannerIMG.settings.width}px`}
+                        fill
+                        quality={100}
+                      />
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
+
+          {/* DESKTOP */}
+          <div className="hidden lg:block">
+            <Swiper
+              modules={[EffectFade, Autoplay]}
+              effect="fade"
+              slidesPerView={1}
+              allowTouchMove={false}
+              speed={800}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+                stopOnLastSlide: false,
+              }}
+            >
+              {heroData?.desktop.map((bannerIMG: BannerImage, index) => {
+                const urlIMG = bannerIMG.src;
+                const proccesedIMG = media.getImageUrl(urlIMG);
+
+                return (
+                  <SwiperSlide
+                    key={index}
+                    className="relative w-full aspect-[1440/800]"
+                  >
+                    <Image
+                      src={proccesedIMG.url}
+                      alt={bannerIMG.title}
+                      priority={index === 0}
+                      quality={100}
+                      fill
+                      sizes="(min-width: 1024px) 100vw"
+                    />
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
+
+          {/* CONTENT */}
+          <div className="w-full h-full absolute inset-0 z-10 flex justify-center items-center lg:justify-between lg:px-[160px]">
+            <div className="flex flex-col items-center lg:items-start gap-4 text-white absolute lg:static top-[300px] bg-black/20 shadow-lg sm:shadow-none md:bg-transparent p-5 mx-5">
+              <span className="text-[14px] leading-[30px] tracking-[5px] lg:text-h4 select-none">
+                {heroData?.titulo.split(",")[0]}
+              </span>
+              <span className="max-w-[480px] text-6xl lg:text-9xl select-none tracking-[0.2px]">
+                {heroData?.titulo.split(",")[1]}
+              </span>
+              <Button
+                variant={"form-solid"}
+                onClick={() => router.push(heroData?.pathname ?? "")}
+                className="w-full h-[50px] border border-black/10 shadow-lg flex"
+              >
+                <span className="text-base font-semibold m-auto">Ver más</span>
+              </Button>
+            </div>
+            <div className="hidden lg:flex flex-col items-center gap-4">
+              <span className="text-h6 [writing-mode:vertical-rl] select-none">
+                Follow us
+              </span>
+              <Link
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://www.instagram.com/bsbelindastore"
+                className="w-[35px] h-[35px] rounded-full bg-white flex"
+              >
+                <SlSocialInstagram className="m-auto text-gold" size={20} />
+              </Link>
+            </div>
+          </div>
+
+          <Link href="#main" className="hidden lg:inline">
+            <TfiArrowDown
+              className="absolute z-10 left-1/2 -translate-x-1/2 bottom-[100px] text-white"
+              size={30}
+            />
+          </Link>
+        </>
+      )}
+    </div>
+  );
+}
