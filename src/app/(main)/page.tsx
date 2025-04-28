@@ -33,7 +33,7 @@ export default async function Page() {
     <>
       <Banner />
       <About />
-      <BestSelling title="Más vendidos" products={bestSellingProducts} />
+      <BestSelling title="Destacados" products={bestSellingProducts} />
       <Poster />
       <Categories products={accesoriesProducts} />
     </>

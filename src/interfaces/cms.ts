@@ -1,12 +1,12 @@
 import { items } from "@wix/data";
 
-export interface BannerImage {
+export interface WixImageModel {
   description: string;
   slug: string;
   alt: string;
-  link: string;
+  link?: string;
   src: string;
-  target: string;
+  target?: string;
   title: string;
   type: string;
   settings: {
@@ -17,9 +17,15 @@ export interface BannerImage {
 }
 
 export interface BannerData extends items.WixDataItem {
-  desktop: BannerImage[];
-  mobile: BannerImage[];
+  desktop: WixImageModel[];
+  mobile: WixImageModel[];
   pathname: string;
   colors: string[];
   titulo: string;
+}
+
+export interface PosterData extends items.WixDataItem {
+  desktop: WixImageModel[];
+  mobile: string;
+  pathname: string;
 }

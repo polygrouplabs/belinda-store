@@ -6,35 +6,44 @@ import { BannerData } from "@/interfaces/cms";
 type heroDataQuery = items.WixDataQuery;
 type heroResponse = items.WixDataResult;
 
+interface HeroState {
+  data: BannerData | null;
+  loading: boolean;
+  error: string | null;
+}
+
 export function useHeroData() {
-  const [heroData, setHeroData] = useState<BannerData>();
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [state, setState] = useState<HeroState>({
+    data: null,
+    loading: true,
+    error: null,
+  });
 
   const headlessClient = useHeadlessClient();
   const heroDataQuery: heroDataQuery | null =
     headlessClient.items.query("Homeslide");
 
   useEffect(() => {
-    const getBanners = async () => {
+    const fetchHeroData = async () => {
       try {
-        const heroDataRes: heroResponse = await heroDataQuery.find();
+        const response: heroResponse = await heroDataQuery.find();
+        const heroData = response.items[0] as BannerData;
 
-        if (heroDataRes) {
-          const heroDataItems = heroDataRes.items[0] as BannerData;
-          setHeroData(heroDataItems);
-        }
-      } catch (error) {
-        console.error("Failed to fetch banners:", error);
-        setError("Failed to fetch banners");
-      } finally {
-        setLoading(false);
+        setState({ data: heroData, loading: false, error: null });
+      } catch (err) {
+        console.error("Error fetching hero data:", err);
+        setState({
+          data: null,
+          loading: false,
+          error: "Failed to fetch banners",
+        });
       }
     };
 
-    getBanners();
+    fetchHeroData();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { heroData, loading, error };
+  return state;
 }

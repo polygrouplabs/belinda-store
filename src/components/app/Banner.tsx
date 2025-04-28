@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useCallback, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -18,13 +19,79 @@ import { Button } from "../ui/button";
 import { TfiArrowDown } from "react-icons/tfi";
 import { SlSocialInstagram } from "react-icons/sl";
 
-import { BannerImage } from "@/interfaces/cms";
+import { WixImageModel } from "@/interfaces/cms";
 import { useHeroData } from "@/hooks/cms/useHeroData";
 
-export default function Banner() {
-  const router = useRouter();
+const SWIPER_CONFIG = {
+  modules: [EffectFade, Autoplay],
+  effect: "fade",
+  slidesPerView: 1,
+  allowTouchMove: false,
+  speed: 800,
+  autoplay: {
+    delay: 2500,
+    disableOnInteraction: false,
+    stopOnLastSlide: false,
+  },
+};
 
-  const { heroData, loading, error } = useHeroData();
+const Banner = memo(() => {
+  const router = useRouter();
+  const { data: heroData, loading, error } = useHeroData();
+
+  const handleButtonClick = useCallback(() => {
+    if (heroData?.pathname) {
+      router.push(heroData.pathname);
+    }
+  }, [heroData?.pathname, router]);
+
+  const mobileSlides = useMemo(() => {
+    return heroData?.mobile.map((bannerIMG: WixImageModel, index) => {
+      const color = heroData.colors[index]?.replace(/'/g, "") || "#ffffff";
+      const urlIMG = bannerIMG.src;
+      const processedIMG = media.getImageUrl(urlIMG);
+
+      return (
+        <SwiperSlide
+          key={bannerIMG.slug}
+          className="relative w-full h-screen"
+          style={{ backgroundColor: color }}
+        >
+          <div className="relative w-full max-w-[460px] h-screen mx-auto">
+            <Image
+              src={processedIMG.url}
+              alt={bannerIMG.title || "Banner image"}
+              priority={index === 0}
+              className="object-cover object-bottom"
+              sizes={`${bannerIMG.settings.width}px`}
+              fill
+              quality={100}
+            />
+          </div>
+        </SwiperSlide>
+      );
+    });
+  }, [heroData?.mobile, heroData?.colors]);
+
+  const desktopSlides = useMemo(() => {
+    return heroData?.desktop.map((bannerIMG: WixImageModel, index) => {
+      const urlIMG = bannerIMG.src;
+      const processedIMG = media.getImageUrl(urlIMG);
+
+      return (
+        <SwiperSlide key={index} className="relative w-full aspect-[1440/800]">
+          <Image
+            src={processedIMG.url}
+            alt={bannerIMG.title || "Banner image"}
+            priority={index === 0}
+            quality={100}
+            fill
+            sizes="(min-width: 1024px) 100vw"
+          />
+        </SwiperSlide>
+      );
+    });
+  }, [heroData?.desktop]);
 
   if (error) {
     return (
@@ -51,95 +118,26 @@ export default function Banner() {
         <>
           {/* MOBILE */}
           <div className="lg:hidden">
-            <Swiper
-              modules={[EffectFade, Autoplay]}
-              effect="fade"
-              slidesPerView={1}
-              allowTouchMove={false}
-              speed={800}
-              autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-                stopOnLastSlide: false,
-              }}
-            >
-              {heroData?.mobile.map((bannerIMG: BannerImage, index) => {
-                const color = heroData.colors[index].replace(/'/g, "");
-                const urlIMG = bannerIMG.src;
-                const proccesedIMG = media.getImageUrl(urlIMG);
-
-                return (
-                  <SwiperSlide
-                    key={bannerIMG.slug}
-                    className="relative w-full h-screen"
-                    style={{ backgroundColor: color }}
-                  >
-                    <div className="relative w-full max-w-[460px] h-screen mx-auto">
-                      <Image
-                        src={proccesedIMG.url}
-                        alt={bannerIMG.title}
-                        priority={index === 0}
-                        className="object-cover object-bottom"
-                        sizes={`${bannerIMG.settings.width}px`}
-                        fill
-                        quality={100}
-                      />
-                    </div>
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
+            <Swiper {...SWIPER_CONFIG}>{mobileSlides}</Swiper>
           </div>
 
           {/* DESKTOP */}
           <div className="hidden lg:block">
-            <Swiper
-              modules={[EffectFade, Autoplay]}
-              effect="fade"
-              slidesPerView={1}
-              allowTouchMove={false}
-              speed={800}
-              autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-                stopOnLastSlide: false,
-              }}
-            >
-              {heroData?.desktop.map((bannerIMG: BannerImage, index) => {
-                const urlIMG = bannerIMG.src;
-                const proccesedIMG = media.getImageUrl(urlIMG);
-
-                return (
-                  <SwiperSlide
-                    key={index}
-                    className="relative w-full aspect-[1440/800]"
-                  >
-                    <Image
-                      src={proccesedIMG.url}
-                      alt={bannerIMG.title}
-                      priority={index === 0}
-                      quality={100}
-                      fill
-                      sizes="(min-width: 1024px) 100vw"
-                    />
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
+            <Swiper {...SWIPER_CONFIG}>{desktopSlides}</Swiper>
           </div>
 
           {/* CONTENT */}
           <div className="w-full h-full absolute inset-0 z-10 flex justify-center items-center lg:justify-between lg:px-[160px]">
             <div className="flex flex-col items-center lg:items-start gap-4 text-white absolute lg:static top-[300px] bg-black/20 shadow-lg sm:shadow-none md:bg-transparent p-5 mx-5">
               <span className="text-[14px] leading-[30px] tracking-[5px] lg:text-h4 select-none">
-                {heroData?.titulo.split(",")[0]}
+                {heroData?.titulo?.split(",")[0]}
               </span>
               <span className="max-w-[480px] text-6xl lg:text-9xl select-none tracking-[0.2px]">
-                {heroData?.titulo.split(",")[1]}
+                {heroData?.titulo?.split(",")[1]}
               </span>
               <Button
                 variant={"form-solid"}
-                onClick={() => router.push(heroData?.pathname ?? "")}
+                onClick={handleButtonClick}
                 className="w-full h-[50px] border border-black/10 shadow-lg flex"
               >
                 <span className="text-base font-semibold m-auto">Ver más</span>
@@ -154,13 +152,18 @@ export default function Banner() {
                 rel="noopener noreferrer"
                 href="https://www.instagram.com/bsbelindastore"
                 className="w-[35px] h-[35px] rounded-full bg-white flex"
+                aria-label="Instagram"
               >
                 <SlSocialInstagram className="m-auto text-gold" size={20} />
               </Link>
             </div>
           </div>
 
-          <Link href="#main" className="hidden lg:inline">
+          <Link
+            href="#main"
+            className="hidden lg:inline"
+            aria-label="Scroll down"
+          >
             <TfiArrowDown
               className="absolute z-10 left-1/2 -translate-x-1/2 bottom-[100px] text-white"
               size={30}
@@ -170,4 +173,8 @@ export default function Banner() {
       )}
     </div>
   );
-}
+});
+
+Banner.displayName = "Banner";
+
+export default Banner;

@@ -20,7 +20,7 @@ import { useMediaQuery } from "@/hooks/handlers/use-media-query";
 
 export const filterItems = [
   { label: "Ver todos", href: "/productos" },
-  { label: "Más vendidos", href: "/productos?categorie=mas-vendidos" },
+  { label: "Destacados", href: "/productos?categorie=mas-vendidos" },
   { label: "Ofertas", href: "/productos?categorie=ofertas" },
   { label: "Mayor a menor precio", href: "/productos?sort=asc" },
   { label: "Menor a mayor Precio", href: "/productos?sort=desc" },

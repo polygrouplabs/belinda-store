@@ -8,12 +8,10 @@ interface newSeriesProps {
 export default function Categories({ products }: newSeriesProps) {
   return (
     <>
-      <div className="relative w-full h-[250px] bg-gold-50">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <h2 className="text-2xl tracking-wider flex flex-col lg:flex-row items-center lg:font-bold text-black text-center">
-            NUESTRAS CATEGORIAS
-          </h2>
-        </div>
+      <div className="w-full bg-gold-50 py-20">
+        <h2 className="text-3xl md:text-4xl text-center font-bold">
+          Nuestras categorías
+        </h2>
       </div>
       <div className="w-full bg-gold-50 lg:pb-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-4 lg:max-w-6xl lg:mx-auto">
