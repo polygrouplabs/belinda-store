@@ -1,16 +1,20 @@
 import { createClient, OAuthStrategy } from "@wix/sdk";
 import { products, collections } from "@wix/stores";
 import { orders } from "@wix/ecom";
-import { cookies } from "next/headers";
 import { members } from "@wix/members";
+import { cookies } from "next/headers";
 
 export const headlessServer = async () => {
-  let refreshToken;
+  let refreshToken = null;
   try {
     const cookieStore = await cookies();
     refreshToken = JSON.parse(cookieStore.get("refreshToken")?.value || "{}");
   } catch (error) {
     console.error("Error parsing refresh token:", error);
+  }
+
+  if (!refreshToken) {
+    console.warn("No refresh token found. Returning null.");
     return null;
   }
 

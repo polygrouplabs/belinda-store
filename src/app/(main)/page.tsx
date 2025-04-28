@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Banner from "@/components/app/Banner";
 import BestSelling from "@/components/app/BestSelling";
 import Poster from "@/components/app/Poster";
