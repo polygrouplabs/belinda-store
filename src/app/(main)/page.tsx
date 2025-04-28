@@ -18,14 +18,11 @@ const env = {
 export default async function Page() {
   const HeadlessServerImplInstance = new HeadlessServerImpl();
 
-  const [bestSellingProducts, accesoriesProducts] = await Promise.all([
+  const [categoriesData, bestSellingProducts] = await Promise.all([
+    await HeadlessServerImplInstance.getCategories(),
     await HeadlessServerImplInstance.getProductsByCollectionId(
       env.bestSellers,
       8
-    ),
-    await HeadlessServerImplInstance.getProductsByCollectionId(
-      env.accesories,
-      5
     ),
   ]);
 
@@ -35,7 +32,7 @@ export default async function Page() {
       <About />
       <BestSelling title="Destacados" products={bestSellingProducts} />
       <Poster />
-      <Categories products={accesoriesProducts} />
+      <Categories categories={categoriesData} />
     </>
   );
 }

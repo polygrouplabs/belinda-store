@@ -51,11 +51,9 @@ export function CartItem({ productCart, onQuantityChange }: CartItemProps) {
     return () => {
       setCurrentVariant(undefined);
     };
-  }, [
-    headlessClient.products,
-    productCart.catalogReference?.catalogItemId,
-    productCart.catalogReference?.options?.variantId,
-  ]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex items-center gap-4 p-4 border-b border-grey-50 relative">

@@ -35,7 +35,9 @@ export default function NavBar() {
     if (headlessClient) {
       getCart(headlessClient, true);
     }
-  }, [headlessClient, getCart]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
