@@ -46,7 +46,7 @@ export default async function SlugPage(props: { params: Params }) {
 
     if (categoriesSlugData) {
       productsQuery = await HeadlessServerImplInstance.getProductsQuery(
-        params.productName,
+        params.nombre,
         categoriesSlugData.collection?._id,
         params.type,
         Number(params.min) || 0,

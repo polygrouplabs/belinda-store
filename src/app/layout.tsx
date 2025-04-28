@@ -78,7 +78,13 @@ export default function RootLayout({
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content="/SEO.jpg" />
 
+        {/* Meta tags para Android */}
+        <meta name="theme-color" content="#f1ddda" />
+        <meta name="mobile-web-app-capable" content="yes" />
+
         <meta name="apple-mobile-web-app-title" content="BS Belinda" />
+
+        <link rel="manifest" href="/manifest.json" />
       </head>
 
       <HeadlessClientContextProvider>

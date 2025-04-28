@@ -36,7 +36,7 @@ export default async function StorePage(props: { searchParams: Params }) {
 
     if (categoriesSlugData) {
       productsQuery = await HeadlessServerImplInstance.getProductsQuery(
-        paramsResponse.productName,
+        paramsResponse.nombre,
         categoriesSlugData.collection?._id,
         paramsResponse.type,
         Number(paramsResponse.min) || 0,
@@ -56,34 +56,43 @@ export default async function StorePage(props: { searchParams: Params }) {
   }
 
   return (
-    <>
-      <div className="container flex flex-col mx-auto max-w-[73rem] pb-10">
-        <div className="flex flex-col items-center text-center max-w-[600px] my-20 mx-auto">
-          <h3 className="text-xl lg:text-4xl font-bold">{title}</h3>
-          <p
-            className="text-grey-dark text-sm lg:text-base mt-6"
-            dangerouslySetInnerHTML={{
-              __html: description.replace(
-                "Belinda",
-                '<span class="font-bold">Belinda</span>'
-              ),
-            }}
-          />
+    <div className="container flex flex-col mx-auto max-w-[73rem] pb-10">
+      {productsData.length > 0 ? (
+        <>
+          <div className="flex flex-col items-center text-center max-w-[600px] my-20 mx-auto">
+            <h3 className="text-xl lg:text-4xl font-bold">{title}</h3>
+            <p
+              className="text-grey-dark text-sm lg:text-base mt-6"
+              dangerouslySetInnerHTML={{
+                __html: description.replace(
+                  "Belinda",
+                  '<span class="font-bold">Belinda</span>'
+                ),
+              }}
+            />
+          </div>
+          <Filter />
+          <ProductList products={productsData} />
+          {productsResponse && (
+            <Pagination
+              hasPrev={productsResponse.hasPrev()}
+              hasNext={productsResponse.hasNext()}
+              currentPage={productsResponse.currentPage || 0}
+            />
+          )}
+        </>
+      ) : (
+        <div className="container max-w-[73rem] min-h-[60vh] flex justify-center items-center mx-auto px-4">
+          <div className="flex flex-col items-center text-center max-w-[600px] my-20 mx-auto gap-5">
+            <h3 className="text-xl lg:text-4xl font-bold">Sin productos</h3>
+            <span className="icon-[icon-park-solid--commodity] text-[80px] opacity-80" />
+            <p className="text-grey-dark text-sm lg:text-base">
+              No hay productos en esta busqueda. Por favor, explora otras
+              categorías o nombre de producto.
+            </p>
+          </div>
         </div>
-        {productsData.length > 0 && (
-          <>
-            <Filter />
-            <ProductList products={productsData} />
-            {productsResponse && (
-              <Pagination
-                hasPrev={productsResponse.hasPrev()}
-                hasNext={productsResponse.hasNext()}
-                currentPage={productsResponse.currentPage || 0}
-              />
-            )}
-          </>
-        )}
-      </div>
-    </>
+      )}
+    </div>
   );
 }

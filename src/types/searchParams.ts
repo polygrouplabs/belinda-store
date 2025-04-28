@@ -2,7 +2,7 @@ export type Params = Promise<{
   slug: string;
   id: string;
 
-  productName?: string;
+  nombre?: string;
   categorie?: string;
   type?: "physical" | "digital";
   limit?: string;

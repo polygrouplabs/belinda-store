@@ -76,7 +76,7 @@ export class HeadlessServerImpl {
   }
 
   async getProductsQuery(
-    productName: string | undefined,
+    nombre: string | undefined,
     categorieSlug: string | undefined | null,
     type: "physical" | "digital" | undefined,
     min: number,
@@ -91,7 +91,7 @@ export class HeadlessServerImpl {
     try {
       // let productsData: productInterface[] = [];
       const productsQuery = this.productsQuery
-        .startsWith("name", productName || "")
+        .startsWith("name", nombre || "")
         .eq("collectionIds", categorieSlug ?? env.all_products)
         .hasSome("productType", type ? [type] : [type ?? "physical", "digital"])
         .gt("priceData.price", min)
