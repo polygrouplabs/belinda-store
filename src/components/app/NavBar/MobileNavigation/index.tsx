@@ -1,4 +1,4 @@
-import Logo from "@/assets/Belinda-text-Icon-Colorway-Gold.svg";
+import Image from "next/image";
 import Link from "next/link";
 import MobileSearch from "./MobileSearch";
 import { MobileMenu } from "./MobileMenu";
@@ -29,7 +29,14 @@ export function MobileNavigation({
           href="/"
           className="w-[150px] h-[auto] flex items-center justify-center"
         >
-          <Logo />
+          <Image
+            width={150}
+            height={80}
+            src={"/Belinda-text-Icon-Colorway-Gold.png"}
+            alt="Logo"
+            priority={true}
+            style={{ width: "auto", height: "auto" }}
+          />
         </Link>
         <div className="flex items-center gap-4">
           <MobileSearch uiState={uiState} setUiState={setUiState} />

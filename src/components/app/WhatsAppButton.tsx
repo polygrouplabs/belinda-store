@@ -7,7 +7,7 @@ import { IoLogoWhatsapp } from "react-icons/io5";
 const WhatsAppButton = () => {
   const [message, setMessage] = useState(false);
 
-  const whatsapp = "";
+  const whatsapp = "3106252095";
 
   useEffect(() => {
     setTimeout(() => {

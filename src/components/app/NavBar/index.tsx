@@ -32,7 +32,7 @@ export default function NavBar() {
   });
 
   useEffect(() => {
-    if (headlessClient) {
+    if (headlessClient && !isLoading) {
       getCart(headlessClient, true);
     }
 
