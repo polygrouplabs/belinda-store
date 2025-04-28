@@ -67,9 +67,9 @@ export default async function SlugPage(props: { params: Params }) {
   return productsData.length > 0 ? (
     <>
       <div className="container mx-auto max-w-[73rem] px-4">
-        <div className="flex flex-col items-center text-center max-w-[600px] my-20 mx-auto">
-          <h3 className="text-xl lg:text-4xl font-bold">{title}</h3>
-          <p className="text-grey-dark text-sm lg:text-base mt-6">
+        <div className="flex flex-col items-center text-center max-w-[600px] mt-28 mx-auto">
+          <h3 className="text-2xl lg:text-4xl font-bold">{title}</h3>
+          <p className="text-grey-dark text-base mt-6">
             {description}
           </p>
         </div>

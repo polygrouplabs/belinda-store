@@ -26,7 +26,7 @@ export const BREADCRUMB_MAPPING: Record<string, string> = {
 
 export const MENU_ITEMS: MenuItem[] = [
   {
-    label: "Home",
+    label: "Inicio",
     type: "link",
     href: "/",
     mobileOnly: true,
@@ -73,7 +73,7 @@ export const MENU_ITEMS: MenuItem[] = [
     action: "layout",
     desktopOnly: true,
   },
-  {
+  /* {
     label: "Rastrear pedido",
     type: "action",
     action: "trackOrder",
@@ -82,5 +82,5 @@ export const MENU_ITEMS: MenuItem[] = [
     label: "Perfil",
     type: "action",
     action: "login",
-  },
+  }, */
 ];

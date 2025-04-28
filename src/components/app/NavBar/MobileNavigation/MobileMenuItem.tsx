@@ -1,67 +1,69 @@
-import { motion } from 'framer-motion';
-import { MenuItem } from '@/config/menu';
-import { useRouter } from 'next/navigation';
-import { UIState } from '../types';
-import { FaChevronRight } from 'react-icons/fa';
+import { motion } from "framer-motion";
+import { MenuItem } from "@/config/menu";
+import { useRouter } from "next/navigation";
+import { UIState } from "../types";
+import { FaChevronRight } from "react-icons/fa";
 
 interface MenuItemProps {
   uiState: UIState;
   setUiState: (state: UIState | ((prev: UIState) => UIState)) => void;
+  onCloseMenu: () => void;
   item: MenuItem;
 }
 
 export default function MobileMenuItem({
   uiState,
   setUiState,
-  item
+  onCloseMenu,
+  item,
 }: MenuItemProps) {
   const router = useRouter();
   const isExpanded = uiState.expandedItem === item.label;
 
   const handleMenuItemClick = () => {
-    if (item.type === 'link') {
+    if (item.type === "link") {
       router.push(item.href!);
-      setUiState(prev => ({ ...prev, menuVisible: false }));
-    } else if (item.type === 'action') {
+      onCloseMenu();
+    } else if (item.type === "action") {
       switch (item.action) {
-        case 'trackOrder': {
-          setUiState(prev => ({
+        case "trackOrder": {
+          setUiState((prev) => ({
             ...prev,
             menuVisible: false,
-            trackOrderVisible: true
+            trackOrderVisible: true,
           }));
           break;
         }
-        case 'login': {
-          router.push('/login');
-          setUiState(prev => ({ ...prev, menuVisible: false }));
+        case "login": {
+          router.push("/login");
+          onCloseMenu();
           break;
         }
       }
-    } else if (item.type === 'category') {
-      setUiState(prev => ({
+    } else if (item.type === "category") {
+      setUiState((prev) => ({
         ...prev,
-        expandedItem: isExpanded ? null : item.label
+        expandedItem: isExpanded ? null : item.label,
       }));
     }
-  }
+  };
 
   if (!item.children) {
     return (
       <button
         onClick={handleMenuItemClick}
-        className='w-full h-[95px] text-center text-[30px] leading-[95px] select-none hover:bg-grey active:bg-grey-dark hover:text-white active:text-white'
+        className="pl-4 w-full h-[55px] text-start text-[18px] leading-[55px] select-none hover:bg-grey active:bg-grey-dark hover:text-white active:text-white"
       >
         {item.label}
       </button>
-    )
+    );
   }
 
   return (
     <>
       <button
         onClick={handleMenuItemClick}
-        className='w-full h-[95px] text-center text-[30px] select-none flex justify-center items-center gap-2 hover:bg-grey active:bg-grey-dark hover:text-white active:text-white'
+        className="pl-4 w-full h-[55px] text-start text-[18px] select-none flex justify-start items-center gap-2 hover:bg-grey active:bg-grey-dark hover:text-white active:text-white"
         aria-expanded={isExpanded}
         aria-controls={`submenu-${item.label}`}
       >
@@ -75,8 +77,8 @@ export default function MobileMenuItem({
       </button>
       <div
         id={`submenu-${item.label}`}
-        className='bg-grey/10 transition-[height] duration-300 overflow-hidden'
-        style={{ height: isExpanded ? item.children.length * 95 : 0 }}
+        className="bg-grey/20 transition-[height] duration-300 overflow-hidden"
+        style={{ height: isExpanded ? item.children.length * 55 : 0 }}
         role="menu"
       >
         {item.children.map((child, index) => (
@@ -84,14 +86,14 @@ export default function MobileMenuItem({
             key={index}
             onClick={() => {
               router.push(child.href);
-              setUiState(prev => ({ ...prev, menuVisible: false }));
+              onCloseMenu();
             }}
-            className="w-full leading-[95px] text-center text-[30px] hover:bg-grey active:bg-grey-dark hover:text-white active:text-white"
+            className="pl-6 w-full leading-[55px] text-start text-[18px] hover:bg-grey active:bg-grey-dark hover:text-white active:text-white"
           >
             {child.label}
           </button>
         ))}
       </div>
     </>
-  )
+  );
 }
