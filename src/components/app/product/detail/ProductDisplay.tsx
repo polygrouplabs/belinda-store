@@ -70,7 +70,7 @@ const ProductDisplay = ({
         <>
           <div className="absolute left-0 top-0 z-20">
             {isOnSale && (
-              <div className="bg-red text-white text-xs px-2 py-1 mb-2">
+              <div className="bg-green-500 text-white text-xs px-2 py-1 mb-2">
                 OFERTA
               </div>
             )}

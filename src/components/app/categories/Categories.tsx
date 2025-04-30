@@ -8,13 +8,15 @@ interface categoriesProps {
 
 export default function Categories({ categories }: categoriesProps) {
   return (
-    <>
-      <div className="w-full bg-gold-50 py-20">
-        <h2 className="text-3xl md:text-4xl text-center font-bold">
-          Nuestras categorías
-        </h2>
-      </div>
-      <div className="w-full bg-gold-50 lg:pb-32">
+    <section
+      id="main"
+      className="flex flex-col justify-center items-center h-max py-20 md:py-40 bg-gold-50"
+    >
+      <h2 className="text-3xl md:text-4xl text-center font-bold mb-10">
+        Categorías
+      </h2>
+
+      <div className="w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-4 lg:max-w-6xl lg:mx-auto">
           <Link
             prefetch={true}
@@ -30,10 +32,6 @@ export default function Categories({ categories }: categoriesProps) {
                 src={categories[2].media?.mainMedia?.image?.url || ""}
                 alt={categories[2].name!}
               />
-
-              <div className="w-full absolute bottom-0 bg-gold-light/90">
-                <p className="text-h3 text-center py-4">{categories[2].name}</p>
-              </div>
             </div>
           </Link>
 
@@ -56,7 +54,9 @@ export default function Categories({ categories }: categoriesProps) {
                   />
 
                   <div className="w-full absolute bottom-0 bg-gold-light/90">
-                    <p className="text-h5 text-center py-2">{categorie.name}</p>
+                    <p className="text-h5 text-center py-2 font-semibold">
+                      {categorie.name}
+                    </p>
                   </div>
                 </div>
               </Link>
@@ -64,6 +64,6 @@ export default function Categories({ categories }: categoriesProps) {
           </div>
         </div>
       </div>
-    </>
+    </section>
   );
 }

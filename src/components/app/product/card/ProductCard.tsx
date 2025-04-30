@@ -6,9 +6,10 @@ import { productInterface } from "@/interfaces/product";
 
 interface ProductCardProps {
   product: productInterface;
+  height?: string;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, height }: ProductCardProps) => {
   const {
     stock,
     isOnSale,
@@ -23,7 +24,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <div className="w-full lg:w-fit block relative  ">
       <ProductDisplay
         product={product}
-        className="w-full h-[240px] lg:w-[312px] lg:h-[400px]"
+        className={`w-full lg:w-[312px] lg:h-[400px] ${height ?? "h-[240px]"}`}
         sizes="312px"
         showBadge={true}
         stock={stock}
