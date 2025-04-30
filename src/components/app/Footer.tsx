@@ -12,23 +12,20 @@ import { IoLogoInstagram, IoLogoTiktok } from "react-icons/io5";
 const Footer = () => {
   return (
     <footer className="bg-black text-white py-12">
-      <div className="container mx-auto px-4">
+      <div className="max-w-[1280px] mx-auto px-4">
         <div className="lg:flex lg:justify-between">
-          {/* Logo */}
-          <div className="hidden lg:block w-[300px]">
-            <Image
-              src="/Belinda-text-Icon-Colorway-Gold-white.png"
-              alt="Belinda Store"
-              width={250}
-              height={100}
-              className="mb-8"
-            />
-          </div>
-
-          {/* 链接区域 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-16 mx-auto lg:mx-0">
-            {/* 店铺信息 */}
+          {/* Columnas */}
+          <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-16">
             <div className="space-y-4 text-center lg:text-left">
+              <div className="hidden lg:block w-[200px]">
+                <Image
+                  src="/Belinda-text-Icon-Colorway-Gold-white.png"
+                  alt="Belinda Store"
+                  width={250}
+                  height={100}
+                  className="mb-8"
+                />
+              </div>
               <h3 className="text-sm font-medium">Nuestras tiendas</h3>
               <div className="space-y-4">
                 <div>
@@ -46,7 +43,6 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* 客户服务 */}
             <div className="space-y-4 text-center lg:text-left">
               <h3 className="text-sm font-medium">¿Necesitas ayuda?</h3>
               <div className="space-y-2">
@@ -71,7 +67,6 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* 法律信息 */}
             <div className="space-y-4 text-center lg:text-left">
               <h3 className="text-sm font-medium">Términos y condiciones</h3>
               <div className="space-y-2">
@@ -118,7 +113,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* 社交媒体和版权信息 */}
         <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col items-center lg:flex-row lg:justify-between lg:items-center">
           <p className="text-sm text-gray-400 text-center lg:text-left">
             © 2024 Belinda Store

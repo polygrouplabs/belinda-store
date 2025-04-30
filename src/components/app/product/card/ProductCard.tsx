@@ -6,10 +6,11 @@ import { productInterface } from "@/interfaces/product";
 
 interface ProductCardProps {
   product: productInterface;
+  width?: string;
   height?: string;
 }
 
-const ProductCard = ({ product, height }: ProductCardProps) => {
+const ProductCard = ({ product, width, height }: ProductCardProps) => {
   const {
     stock,
     isOnSale,
@@ -21,10 +22,12 @@ const ProductCard = ({ product, height }: ProductCardProps) => {
   } = useProductCard(product);
 
   return (
-    <div className="w-full lg:w-fit block relative  ">
+    <div className={`${width ?? "w-full lg:w-fit"} block relative`}>
       <ProductDisplay
         product={product}
-        className={`w-full lg:w-[312px] lg:h-[400px] ${height ?? "h-[240px]"}`}
+        className={`${width ?? "w-full lg:w-[312px]"} ${
+          height ?? "h-[240px] lg:h-[400px]"
+        }`}
         sizes="312px"
         showBadge={true}
         stock={stock}
@@ -38,7 +41,7 @@ const ProductCard = ({ product, height }: ProductCardProps) => {
           <h5 className="text-black/50">{brandName}</h5>
         </div>
         {isOnSale ? (
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between flex-wrap items-center">
             <h5 className="font-semibold text-red">
               {formattedDiscountedPrice} {currency}
             </h5>

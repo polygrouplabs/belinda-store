@@ -53,7 +53,7 @@ export default function Carrousel({
   const desktopSlide = useMemo(() => {
     return products.slice(slice[0], slice[1]).map((product, index) => (
       <SwiperSlide key={index}>
-        <ProductCard height="h-[340px]" product={product} key={product._id} />
+        <ProductCard width="w-full" height="h-[580px]" product={product} key={product._id} />
       </SwiperSlide>
     ));
   }, [products, slice]);
@@ -61,7 +61,7 @@ export default function Carrousel({
   const mobileSlide = useMemo(() => {
     return products.slice(slice[0], slice[1]).map((product, index) => (
       <SwiperSlide key={index}>
-        <div className="w-[170px]">
+        <div className="w-[200px]">
           <ProductCard product={product} key={product._id} />
         </div>
       </SwiperSlide>
@@ -73,7 +73,7 @@ export default function Carrousel({
       className={`${
         slidesPerView == 2
           ? "max-w-[340px] sm:max-w-[640px]"
-          : "max-w-[400px] md:max-w-[1280px]"
+          : "max-w-[420px] md:max-w-[2160px]"
       }`}
     >
       <div className="hidden md:block">

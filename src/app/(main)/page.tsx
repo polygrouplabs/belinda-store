@@ -39,10 +39,10 @@ export default async function Page() {
     <>
       <Banner />
       <About />
-      <Features title="Destacados" products={bestSellingProducts} />
+      <Features title="DESTACADOS" products={bestSellingProducts} />
       <Categories categories={categoriesData} />
       <Poster />
-      <Features title="Nueva colección" products={newCollectionProducts} />
+      <Features title="NUEVA COLECCIÓN" products={newCollectionProducts} />
     </>
   );
 }
