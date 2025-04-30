@@ -10,7 +10,7 @@ export default function Categories({ categories }: categoriesProps) {
   return (
     <section
       id="main"
-      className="flex flex-col justify-center items-center h-max py-20 md:py-40 bg-gold-50"
+      className="flex flex-col justify-center items-center h-max py-20 md:py-40"
     >
       <h2 className="text-3xl md:text-4xl text-center font-bold mb-10">
         Categorías
