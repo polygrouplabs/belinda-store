@@ -68,7 +68,7 @@ export default async function SlugPage(props: { params: Params }) {
     <>
       <div className="container mx-auto max-w-[73rem] px-4">
         <div className="flex flex-col items-center text-center max-w-[600px] mt-28 mx-auto">
-          <h3 className="text-2xl lg:text-4xl font-bold">{title}</h3>
+          <h3 className="text-2xl lg:text-4xl uppercase">{title}</h3>
           <p className="text-grey-dark text-base mt-6">
             {description}
           </p>
@@ -81,7 +81,7 @@ export default async function SlugPage(props: { params: Params }) {
   ) : (
     <div className="container max-w-[73rem] min-h-[60vh] flex justify-center items-center mx-auto px-4">
       <div className="flex flex-col items-center text-center max-w-[600px] my-20 mx-auto gap-5">
-        <h3 className="text-xl lg:text-4xl font-bold">
+        <h3 className="text-xl lg:text-4xl uppercase">
           Categoría sin productos
         </h3>
         <span className="icon-[icon-park-solid--commodity] text-[80px] opacity-80" />
