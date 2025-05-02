@@ -16,7 +16,7 @@ export default function ShoppingCart({ cart, children }: ShoppingCartProps) {
       <SheetTrigger asChild>
         <button
           aria-label="Mi bolsa"
-          className="flex items-center justify-center lg:text-gold-light lg:hover:text-gold relative"
+          className="flex items-center justify-center lg:hover:text-gold relative"
         >
           <RiShoppingBag2Fill className="w-[30px] h-[30px] lg:w-[22px] lg:h-[22px]" />
           {cart.lineItems && cart.lineItems?.length > 0 && (

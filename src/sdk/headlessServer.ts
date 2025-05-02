@@ -4,6 +4,8 @@ import { orders } from "@wix/ecom";
 import { members } from "@wix/members";
 import { cookies } from "next/headers";
 
+import { NEXT_PUBLIC_HEADLESS_ID_CLIENT } from "@/utils/env";
+
 export const headlessServer = async () => {
   let refreshToken = null;
   try {
@@ -18,6 +20,11 @@ export const headlessServer = async () => {
     return null;
   }
 
+  if (!NEXT_PUBLIC_HEADLESS_ID_CLIENT) {
+    console.error("ID CLIENT NOT PROVIDED");
+    return;
+  }
+
   const headlessServerInstance = createClient({
     modules: {
       products,
@@ -26,7 +33,7 @@ export const headlessServer = async () => {
       members,
     },
     auth: OAuthStrategy({
-      clientId: process.env.NEXT_PUBLIC_HEADLESS_ID_CLIENT!,
+      clientId: NEXT_PUBLIC_HEADLESS_ID_CLIENT,
       tokens: {
         refreshToken,
         accessToken: {

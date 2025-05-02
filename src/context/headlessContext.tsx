@@ -13,10 +13,6 @@ import { NEXT_PUBLIC_HEADLESS_ID_CLIENT } from "@/utils/env";
 
 const refreshToken = JSON.parse(Cookies.get("refreshToken") || "{}");
 
-const env = {
-  id_client: NEXT_PUBLIC_HEADLESS_ID_CLIENT,
-};
-
 export const headlessClientInstance = createClient({
   modules: {
     products,
@@ -28,7 +24,8 @@ export const headlessClientInstance = createClient({
     items,
   },
   auth: OAuthStrategy({
-    clientId: env.id_client!,
+    clientId:
+      NEXT_PUBLIC_HEADLESS_ID_CLIENT ?? "fd6be54f-f298-47f2-b57d-a4273fea1b22",
     tokens: {
       refreshToken,
       accessToken: {

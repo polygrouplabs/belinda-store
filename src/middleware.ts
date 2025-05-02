@@ -10,9 +10,14 @@ export const middleware = async (request: NextRequest) => {
     return res;
   }
 
+  if (!NEXT_PUBLIC_HEADLESS_ID_CLIENT) {
+    console.error('ID CLIENT NOT PROVIDED')
+    return;
+  }
+
   const headlessClient = createClient({
-    auth: OAuthStrategy({ clientId: NEXT_PUBLIC_HEADLESS_ID_CLIENT! }),
-    headers: { "x-wix-client-id": NEXT_PUBLIC_HEADLESS_ID_CLIENT! },
+    auth: OAuthStrategy({ clientId: NEXT_PUBLIC_HEADLESS_ID_CLIENT }),
+    headers: { "x-wix-client-id": NEXT_PUBLIC_HEADLESS_ID_CLIENT },
   });
 
   const tokens = await headlessClient.auth.generateVisitorTokens();

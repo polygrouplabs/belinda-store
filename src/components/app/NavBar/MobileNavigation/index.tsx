@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import MobileSearch from "./MobileSearch";
-import { MobileMenu } from "./MobileMenu";
-import { UIState } from "../types";
 import { useScrollPosition } from "@/hooks/handlers/useScrollPosition";
+
+import MobileSearch from "./MobileSearch";
+import { UIState } from "../types";
 
 interface MobileNavigationProps {
   uiState: UIState;
@@ -41,7 +41,6 @@ export function MobileNavigation({
         <div className="flex items-center gap-4">
           <MobileSearch uiState={uiState} setUiState={setUiState} />
           {children}
-          <MobileMenu uiState={uiState} setUiState={setUiState} />
         </div>
       </div>
     </nav>

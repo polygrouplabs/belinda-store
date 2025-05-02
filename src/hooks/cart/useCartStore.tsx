@@ -37,8 +37,9 @@ export const useCartStore = create<CartState>((set) => ({
           counter: cart?.lineItems.length || 0,
         });
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
-      console.error("Error getting cart", err);
+      // console.log("Error getting cart", err);
       set((prev) => ({ ...prev, isLoading: false }));
     }
   },

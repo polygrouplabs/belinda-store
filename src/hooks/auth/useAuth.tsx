@@ -1,12 +1,18 @@
 "use client";
+
 import { LoginState } from "@wix/sdk";
+
+import { NEXT_PUBLIC_URL } from "@/utils/env";
 
 import { useState } from "react";
 import { useHeadlessClient } from "../sdk/useHeadlessClient";
 import { usePathname, useRouter } from "next/navigation";
 
 import Cookies from "js-cookie";
-import { Tokens } from "@wix/sdk";
+
+const env = {
+  url: NEXT_PUBLIC_URL ?? "https://bsbelindastore.com",
+};
 
 export enum MODE {
   LOGIN = "LOGIN",
@@ -17,46 +23,73 @@ export enum MODE {
 
 export default function useAuth() {
   const [mode, setMode] = useState(MODE.LOGIN);
+  const [badgeState, setBadgeState] = useState(false);
 
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [emailCode, setEmailCode] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
-
-  const [badgeState, setBadgeState] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [providerIsLoading, setProviderIsLoading] = useState(false);
 
   const headlessClient = useHeadlessClient();
 
   const pathName = usePathname();
   const route = useRouter();
 
-  const handleMode = (mode: MODE) => {
-    setMode(mode);
+  const handleMode = (mode: MODE) => setMode(mode);
+  const handleEmail = (email: string) => setEmail(email);
+  const handleEmailCode = (emailCode: string) => setEmailCode(emailCode);
+  const handlePassword = (password: string) => setPassword(password);
+  const handleUsername = (username: string) => setUsername(username);
+
+  const handleError = (errorCode: string) => {
+    const errorMessages: Record<string, string> = {
+      invalidEmail: "Correo o contraseña incorrecta",
+      invalidPassword: "Correo o contraseña incorrecta",
+      emailAlreadyExists: "Ya existe una cuenta con este Email",
+      resetPassword: "Necesitas crear una nueva contraseña",
+    };
+
+    setError(
+      errorMessages[errorCode] ||
+        "Ha ocurrido un error, por favor intenta más tarde"
+    );
   };
 
-  const handleEmail = (email: string) => {
-    setEmail(email);
+  const handleSuccess = (message: string) => {
+    setMessage(message);
+    setTimeout(() => {
+      setBadgeState(false);
+    }, 3000);
   };
 
-  const handleEmailCode = (emailCode: string) => {
-    setEmailCode(emailCode);
-  };
+  const loginWithProvider = async (): Promise<void> => {
+    try {
+      setProviderIsLoading(true);
+      const loginRequestData = headlessClient.auth.generateOAuthData(env.url);
 
-  const handlePassword = (password: string) => {
-    setPassword(password);
-  };
+      localStorage.setItem("AUTH_SESSION", JSON.stringify(loginRequestData));
 
-  const handleUsername = (username: string) => {
-    setUsername(username);
+      const { authUrl } = await headlessClient.auth.getAuthUrl(
+        loginRequestData
+      );
+
+      window.location.href = authUrl;
+    } catch (err) {
+      console.error("Error en loginWithProvider:", err);
+      setError("Ha ocurrido un error al iniciar sesión con el proveedor.");
+    } finally {
+      setProviderIsLoading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-
     setIsLoading(true);
     setBadgeState(true);
 
@@ -65,10 +98,7 @@ export default function useAuth() {
 
       switch (mode) {
         case MODE.LOGIN:
-          response = await headlessClient.auth.login({
-            email,
-            password,
-          });
+          response = await headlessClient.auth.login({ email, password });
           break;
         case MODE.REGISTER:
           response = await headlessClient.auth.register({
@@ -89,74 +119,58 @@ export default function useAuth() {
           });
           break;
         default:
-          break;
+          throw new Error("Modo no soportado");
       }
 
-      switch (response?.loginState) {
+      if (!response) throw new Error("Respuesta nula del servidor");
+
+      switch (response.loginState) {
         case LoginState.SUCCESS:
           const sessionToken = response.data.sessionToken;
 
-          if (!sessionToken) {
-            console.error("El sessionToken es nulo o indefinido");
-            return;
-          }
+          if (!sessionToken)
+            throw new Error("El sessionToken es nulo o indefinido");
 
-          await headlessClient.auth
-            .getMemberTokensForDirectLogin(sessionToken)
-            .then((tokens: Tokens) => {
-              Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
-                expires: 2,
-                sameSite: "strict",
-              });
+          const tokens =
+            await headlessClient.auth.getMemberTokensForDirectLogin(
+              sessionToken
+            );
+          Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
+            expires: 2,
+            sameSite: "strict",
+          });
 
-              headlessClient.auth.setTokens(tokens);
-              setMessage("Has iniciado sesión, serás redireccionado");
+          headlessClient.auth.setTokens(tokens);
+          handleSuccess("Has iniciado sesión, serás redireccionado");
 
-              setTimeout(() => {
-                route.push("/");
-              }, 500);
-            })
-            .catch((e) => {
-              console.log(e);
-              setError("Ups, algo ha salido mal.");
-            })
-            .finally(() => {
-              setIsLoading(false);
-            });
-
+          setTimeout(() => {
+            route.push("/");
+          }, 500);
           break;
+
         case "EMAIL_VERIFICATION_REQUIRED":
           setMode(MODE.EMAIL_VERIFICATION);
           break;
-        case LoginState.FAILURE:
-          if (
-            response.errorCode === "invalidEmail" ||
-            response.errorCode === "invalidPassword"
-          ) {
-            setError("Correo o contraseña incorrecta");
-          } else if (response.errorCode === "emailAlreadyExists") {
-            setError("Ya existe una cuenta con este Email");
-          } else if (response.errorCode === "resetPassword") {
-            setError("Necesitas crear una nueva contraseña");
-          } else {
-            console.log(response.errorCode);
-            setError("Ha ocurrido un error, por favor intenta más tarde");
-          }
-          break;
-        case LoginState.OWNER_APPROVAL_REQUIRED:
-          setMessage("Tu cuenta esta pendiente por validación");
-        default:
-          break;
-      }
 
-      setTimeout(() => {
-        setBadgeState(false);
-      }, 3000);
+        case LoginState.FAILURE:
+          handleError(response.errorCode ?? "");
+          break;
+
+        case LoginState.OWNER_APPROVAL_REQUIRED:
+          handleSuccess("Tu cuenta está pendiente por validación");
+          break;
+
+        default:
+          throw new Error("Estado de login desconocido");
+      }
     } catch (err) {
-      console.log(err);
+      console.error("Error en handleSubmit:", err);
       setError("Ha ocurrido un error, por favor intenta más tarde");
     } finally {
       setIsLoading(false);
+      setTimeout(() => {
+        setBadgeState(false);
+      }, 3000);
     }
   };
 
@@ -169,11 +183,13 @@ export default function useAuth() {
     emailCode,
     password,
     isLoading,
+    providerIsLoading,
     handleMode,
     handleEmail,
     handleEmailCode,
     handleSubmit,
     handleUsername,
     handlePassword,
+    loginWithProvider,
   };
 }

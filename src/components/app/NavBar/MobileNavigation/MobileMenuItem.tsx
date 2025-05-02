@@ -52,7 +52,7 @@ export default function MobileMenuItem({
     return (
       <button
         onClick={handleMenuItemClick}
-        className="pl-4 w-full h-[55px] text-start text-[18px] leading-[55px] select-none hover:bg-grey active:bg-grey-dark hover:text-white active:text-white"
+        className="pl-4 w-full h-[50px] text-start text-[18px] leading-[50px] select-none hover:bg-grey active:bg-grey-dark hover:text-white active:text-white"
       >
         {item.label}
       </button>
@@ -63,7 +63,7 @@ export default function MobileMenuItem({
     <>
       <button
         onClick={handleMenuItemClick}
-        className="pl-4 w-full h-[55px] text-start text-[18px] select-none flex justify-start items-center gap-2 hover:bg-grey active:bg-grey-dark hover:text-white active:text-white"
+        className="pl-4 w-full h-[50px] text-start text-[18px] select-none flex justify-start items-center gap-2 hover:bg-grey active:bg-grey-dark hover:text-white active:text-white"
         aria-expanded={isExpanded}
         aria-controls={`submenu-${item.label}`}
       >
@@ -78,7 +78,7 @@ export default function MobileMenuItem({
       <div
         id={`submenu-${item.label}`}
         className="bg-grey/20 transition-[height] duration-300 overflow-hidden"
-        style={{ height: isExpanded ? item.children.length * 55 : 0 }}
+        style={{ height: isExpanded ? item.children.length * 50 : 0 }}
         role="menu"
       >
         {item.children.map((child, index) => (
@@ -88,7 +88,7 @@ export default function MobileMenuItem({
               router.push(child.href);
               onCloseMenu();
             }}
-            className="pl-6 w-full leading-[55px] text-start text-[18px] hover:bg-grey active:bg-grey-dark hover:text-white active:text-white"
+            className="pl-6 w-full leading-[50px] text-start text-[18px] hover:bg-grey active:bg-grey-dark hover:text-white active:text-white"
           >
             {child.label}
           </button>

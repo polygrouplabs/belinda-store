@@ -32,5 +32,3 @@ export const updateUser = async (formData: FormData) => {
     console.log(err);
   }
 };
-
-export async function updateListProductsByFilter(brand: string) {}
