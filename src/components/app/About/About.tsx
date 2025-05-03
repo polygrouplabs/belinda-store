@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <section id="main" className="w-full min-h-[70vh] flex flex-col justify-center items-center bg-gold-50 py-20 md:py-40">
+    <section id="main" className="w-full min-h-[70vh] flex flex-col justify-center items-center py-20 md:py-40">
       <div className="max-w-[73rem] flex flex-col gap-5 px-5 text-base md:text-xl">
         <p>
           Descubre <strong>BS Belinda Store</strong> Donde la moda cobra vida
