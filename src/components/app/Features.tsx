@@ -12,20 +12,19 @@ interface featuresProps {
 export default function Features({ title, products }: featuresProps) {
   return (
     <section
-      id="main"
-      className={`w-full h-max flex flex-col justify-center items-center py-20 ${
-        title === "NUEVA COLECCIÓN" && "bg-pink-light/50"
+      className={`w-full h-max flex flex-col justify-center items-center ${
+        title === "NUEVA COLECCIÓN" ? "py-20 bg-pink-light/50" : "py-[10px]"
       }`}
     >
       {title === "NUEVA COLECCIÓN" && (
         <h2 className="text-3xl md:text-4xl mb-10">{title}</h2>
       )}
 
-      <div className="max-w-[1280px] flex flex-col md:flex-row gap-[40px] sm:gap-[5px] justify-center items-center">
+      <div className="max-w-[1280px] flex flex-col md:flex-row gap-[10px] sm:gap-[5px] justify-center items-center">
         {title === "NUEVA COLECCIÓN" ? (
           <>
-            <div className="w-full px-2 transition hover:scale-105">
-              <ProductCard height="h-[340px]" product={products[0]} />
+            <div className="w-full transition hover:scale-105">
+              <ProductCard height="h-[480px]" product={products[0]} />
             </div>
             <ProductCarousel
               slice={[1, 8]}

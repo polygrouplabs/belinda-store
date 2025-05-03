@@ -57,7 +57,7 @@ const Banner = memo(() => {
           className="relative w-full h-screen"
           style={{ backgroundColor: color }}
         >
-          <div className="relative w-full max-w-[460px] h-screen mx-auto">
+          <div className="relative w-full max-w-[460px] h-[100dvh] mx-auto">
             <Image
               src={processedIMG.url}
               alt={bannerIMG.title || "Banner image"}

@@ -125,6 +125,7 @@
 }
 
 * {
+  scroll-behavior: smooth;
   scrollbar-color: #f1ddda white;
   scrollbar-width: thin;
   box-sizing: border-box;
@@ -139,6 +140,7 @@
   background-color: white;
   border-radius: 0px;
 }
+
 *::-webkit-scrollbar {
   width: 5px;
   height: 5px;

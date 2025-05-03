@@ -36,7 +36,7 @@ export default function Carrousel({
   };
 
   const SWIPER_CONFIG_MOBILE = {
-    slidesPerView: 2,
+    slidesPerView: 1,
     spaceBetween: 5,
     pagination: {
       clickable: true,
@@ -47,13 +47,18 @@ export default function Carrousel({
     },
     modules: [Navigation, Autoplay, Pagination],
     allowTouchMove: true,
-    centeredSlides: slidesPerView === 2 ? false : true,
+    centeredSlides: true,
   };
 
   const desktopSlide = useMemo(() => {
     return products.slice(slice[0], slice[1]).map((product, index) => (
       <SwiperSlide key={index}>
-        <ProductCard width="w-full" height="h-[580px]" product={product} key={product._id} />
+        <ProductCard
+          width="w-full"
+          height="h-[580px]"
+          product={product}
+          key={product._id}
+        />
       </SwiperSlide>
     ));
   }, [products, slice]);
@@ -61,21 +66,13 @@ export default function Carrousel({
   const mobileSlide = useMemo(() => {
     return products.slice(slice[0], slice[1]).map((product, index) => (
       <SwiperSlide key={index}>
-        <div className="w-[200px]">
-          <ProductCard product={product} key={product._id} />
-        </div>
+        <ProductCard height="h-[480px]" product={product} key={product._id} />
       </SwiperSlide>
     ));
   }, [products, slice]);
 
   return (
-    <div
-      className={`${
-        slidesPerView == 2
-          ? "max-w-[340px] sm:max-w-[640px]"
-          : "max-w-[420px] md:max-w-[2160px]"
-      }`}
-    >
+    <div className={"max-w-[400px] md:max-w-[2160px]"}>
       <div className="hidden md:block">
         <Swiper className="mySwiper" {...SWIPER_CONFIG_DESKTOP}>
           {desktopSlide}
