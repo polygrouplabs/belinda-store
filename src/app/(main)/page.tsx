@@ -4,6 +4,8 @@ import Banner from "@/components/app/Banner";
 import Features from "@/components/app/Features";
 import Poster from "@/components/app/Poster";
 import Categories from "@/components/app/categories/Categories";
+import About from "@/components/app/About/About";
+import NewsLetter from "@/components/app/Newsletter";
 
 import { HeadlessServerImpl } from "@/controllers/headlessServerImpl";
 import {
@@ -11,7 +13,6 @@ import {
   NEXT_PUBLIC_ACCESORY_ID,
   NEXT_PUBLIC_NEW_COLLECTION_ID,
 } from "@/utils/env";
-import About from "@/components/app/About/About";
 
 const env = {
   bestSellers: NEXT_PUBLIC_BEST_SELLERS_ID!,
@@ -43,6 +44,7 @@ export default async function Page() {
       <Categories categories={categoriesData} />
       <Poster />
       <Features title="NUEVA COLECCIÓN" products={newCollectionProducts} />
+      <NewsLetter />
     </>
   );
 }
