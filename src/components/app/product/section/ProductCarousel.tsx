@@ -53,7 +53,12 @@ export default function Carrousel({
   const desktopSlide = useMemo(() => {
     return products.slice(slice[0], slice[1]).map((product, index) => (
       <SwiperSlide key={index}>
-        <ProductCard height="h-[480px]" product={product} key={product._id} />
+        <ProductCard
+          width="w-full"
+          height="h-[480px]"
+          product={product}
+          key={product._id}
+        />
       </SwiperSlide>
     ));
   }, [products, slice]);
@@ -67,7 +72,7 @@ export default function Carrousel({
   }, [products, slice]);
 
   return (
-    <div className={"max-w-[400px] sm:max-w-[640px]"}>
+    <div className={"max-w-[400px] sm:max-w-[860px]"}>
       <div className="hidden md:block">
         <Swiper className="mySwiper" {...SWIPER_CONFIG_DESKTOP}>
           {desktopSlide}

@@ -20,11 +20,11 @@ export default function Features({ title, products }: featuresProps) {
         <h2 className="text-3xl md:text-4xl mb-10">{title}</h2>
       )}
 
-      <div className="max-w-[1280px] flex flex-col md:flex-row gap-[10px] sm:gap-[5px] justify-center items-center">
+      <div className="max-w-[1480px] flex flex-col md:flex-row gap-[10px] justify-center items-center">
         {title === "NUEVA COLECCIÓN" ? (
           <>
             <div className="w-full transition hover:scale-105">
-              <ProductCard height="h-[480px]" product={products[0]} />
+              <ProductCard width="w-[400px]" height="h-[480px]" product={products[0]} />
             </div>
             <ProductCarousel
               slice={[1, 8]}

@@ -5,9 +5,6 @@ import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { /* BsFillBagPlusFill */ BsEye } from "react-icons/bs";
 import { productInterface } from "@/interfaces/product";
 import { products } from "@wix/stores";
 
@@ -31,17 +28,12 @@ const ProductDisplay = ({
   isOnSale,
   ribbonText,
 }: ProductDisplayProps) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const router = useRouter();
-
+  //const [isHovered, setIsHovered] = useState(false);
+  // const router = useRouter();
   // const addToCart = useCartStore((state) => state.addItem);
 
   return (
-    <div
-      className={cn("relative", className)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className={cn("relative", className)}>
       <Link
         href={`/producto/${product._id}`}
         className="block w-full h-full relative"
@@ -88,17 +80,6 @@ const ProductDisplay = ({
           )}
         </>
       )}
-
-      <div
-        onClick={() => {
-          router.push(`/producto/${product._id}`);
-        }}
-        className={`absolute bottom-0 left-0 right-0 h-[72px] bg-gold cursor-pointer hover:bg-gold-dark transition-opacity duration-300 flex items-center justify-center ${
-          isHovered ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <BsEye size={30} className="text-white" />
-      </div>
     </div>
   );
 };
