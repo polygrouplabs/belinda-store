@@ -59,7 +59,7 @@ export default function NewsLetter() {
         <div className="w-full flex items-center">
           <Input
             type="email"
-            placeholder="Correo eléctronico"
+            placeholder="Correo electrónico"
             className="rounded-l-full"
             ref={emailRef}
           />

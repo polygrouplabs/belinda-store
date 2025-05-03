@@ -13,7 +13,7 @@ export default function Features({ title, products }: featuresProps) {
   return (
     <section
       className={`w-full h-max flex flex-col justify-center items-center ${
-        title === "NUEVA COLECCIÓN" ? "py-20 bg-pink-light/50" : "py-[10px]"
+        title === "NUEVA COLECCIÓN" ? "py-20" : "py-[10px]"
       }`}
     >
       {title === "NUEVA COLECCIÓN" && (
