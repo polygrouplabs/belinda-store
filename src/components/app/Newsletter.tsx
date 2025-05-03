@@ -49,7 +49,7 @@ export default function NewsLetter() {
   }
 
   return (
-    <section className="flex flex-col justify-center items-center py-20 bg-pink-dark/50">
+    <section className="flex flex-col justify-center items-center py-20">
       <h3 className="font-semibold">SUSCRÍBETE A NUESTRO NEWSLETTER</h3>
 
       <form

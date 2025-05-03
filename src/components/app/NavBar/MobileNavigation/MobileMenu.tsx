@@ -115,7 +115,7 @@ export function MobileMenu({
               )
             )}
           </div>
-          <div className="w-full flex justify-between absolute left-2 right-0 bottom-20 px-5">
+          <div className="w-full flex justify-between absolute left-2 right-0 bottom-10 px-5">
             {isLoggedIn ? (
               <>
                 <button
