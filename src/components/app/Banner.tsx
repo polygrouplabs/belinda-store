@@ -1,5 +1,7 @@
 "use client";
 
+import { isIOS } from "@/utils/device";
+
 import { useMemo, useCallback, memo } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -57,12 +59,16 @@ const Banner = memo(() => {
           className="relative w-full h-screen"
           style={{ backgroundColor: color }}
         >
-          <div className="relative w-full max-w-[460px] h-[100dvh] mx-auto">
+          <div
+            className={`relative w-full max-w-[460px] ${
+              isIOS() ? "h-[90vh]" : "h-[100dvh]"
+            } mx-auto`}
+          >
             <Image
               src={processedIMG.url}
               alt={bannerIMG.title || "Banner image"}
               priority={index === 0}
-              className="object-cover object-bottom"
+              className="object-cover"
               sizes={`${bannerIMG.settings.width}px`}
               fill
               quality={100}
