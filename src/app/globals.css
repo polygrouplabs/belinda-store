@@ -145,3 +145,7 @@
   width: 5px;
   height: 5px;
 }
+
+body{
+  overflow-x: hidden;
+}

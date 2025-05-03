@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 import { User2Icon } from "lucide-react";
 import { members } from "@wix/members";
 import { motion, AnimatePresence } from "framer-motion";
+import { IoLogoInstagram, IoLogoTiktok } from "react-icons/io5";
 import { HiLogout, HiOutlineMenu, HiOutlineMenuAlt3 } from "react-icons/hi";
-import MobileMenuItem from "./MobileMenuItem";
 
 import { UIState } from "../types";
 
@@ -22,6 +22,7 @@ import {
   SheetDescription,
   SheetHeader,
 } from "@/components/ui/sheet";
+import MobileMenuItem from "./MobileMenuItem";
 
 interface MobileMenuProps {
   isLoggedIn: boolean;
@@ -101,7 +102,7 @@ export function MobileMenu({
             Menu de navegación
           </SheetDescription>
         </SheetHeader>
-        <div className="flex text-xl min-h-[90vh] overflow-hidden relative">
+        <div className="flex text-xl min-h-[100vh] overflow-hidden relative">
           <div className="w-full max-h-[calc(100vh_-132px)] overflow-auto ml-6">
             {MENU_ITEMS.filter((item) => !item.desktopOnly).map(
               (item, index) => (
@@ -114,64 +115,87 @@ export function MobileMenu({
                 />
               )
             )}
-          </div>
-          <div className="w-full flex justify-between absolute left-2 right-0 bottom-10 px-5">
-            {isLoggedIn ? (
-              <>
+            <div className="w-full h-[1px] bg-grey/50 my-4" />
+            <div className="w-full flex justify-between px-2">
+              {isLoggedIn ? (
+                <>
+                  <button
+                    onClick={() => {
+                      handleCloseMenu();
+                      router.push("/perfil");
+                    }}
+                    className="flex items-center gap-4"
+                  >
+                    <div className="relative">
+                      <div className="w-2 h-2 rounded-full bg-pink absolute -top-1 -right-1 animate-pulse" />
+                      {currentMember?.member?.profile?.photo?.url ? (
+                        <Image
+                          width={40}
+                          height={40}
+                          src={currentMember?.member?.profile?.photo?.url}
+                          alt="Foto de perfil"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-grey flex items-center justify-center">
+                          <p className="text-white font-bold">
+                            {currentMember?.member?.profile?.nickname
+                              ?.charAt(0)
+                              .toUpperCase()}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex text-start flex-col">
+                      <span className="text-h6 font-bold">
+                        {currentMember?.member?.profile?.nickname}
+                      </span>
+                      <span className="text-[.8rem]">
+                        {currentMember?.member?.profile?.slug}
+                      </span>
+                    </div>
+                  </button>
+                  <button disabled={isLoading} onClick={handleLogout}>
+                    <HiLogout className="hover:text-gold-dark" size={30} />
+                  </button>
+                </>
+              ) : (
                 <button
                   onClick={() => {
                     handleCloseMenu();
-                    router.push("/perfil");
+                    router.push("/login");
                   }}
-                  className="flex items-center gap-4"
+                  className="flex items-center gap-2 text-[.8rem]"
                 >
-                  <div className="relative">
-                    <div className="w-2 h-2 rounded-full bg-pink absolute -top-1 -right-1 animate-pulse" />
-                    {currentMember?.member?.profile?.photo?.url ? (
-                      <Image
-                        width={40}
-                        height={40}
-                        src={currentMember?.member?.profile?.photo?.url}
-                        alt="Foto de perfil"
-                      />
-                    ) : (
-                      <div className="w-10 h-10 rounded-full bg-grey flex items-center justify-center">
-                        <p className="text-white font-bold">
-                          {currentMember?.member?.profile?.nickname
-                            ?.charAt(0)
-                            .toUpperCase()}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex text-start flex-col">
-                    <span className="text-h6 font-bold">
-                      {currentMember?.member?.profile?.nickname}
-                    </span>
-                    <span className="text-[.8rem]">
-                      {currentMember?.member?.profile?.slug}
-                    </span>
-                  </div>
+                  <User2Icon
+                    className="hover:text-gold-dark rounded-full p-1 bg-grey"
+                    size={35}
+                  />
+                  Iniciar sesión | Registrarte
                 </button>
-                <button disabled={isLoading} onClick={handleLogout}>
-                  <HiLogout className="hover:text-gold-dark" size={30} />
-                </button>
-              </>
-            ) : (
-              <button
-                onClick={() => {
-                  handleCloseMenu();
-                  router.push("/login");
-                }}
-                className="flex items-center gap-2 text-[.8rem]"
-              >
-                <User2Icon
-                  className="hover:text-gold-dark rounded-full p-1 bg-grey"
-                  size={35}
-                />
-                Iniciar sesión | Registrarte
-              </button>
-            )}
+              )}
+            </div>
+            <div className="w-full h-[1px] bg-grey/50 my-4" />
+            <div className="flex flex-col gap-2 ml-3">
+              <span className="text-xs">Síguenos en:</span>
+              <div className="flex gap-2">
+                <a
+                  href="https://www.instagram.com/bsbelindastore"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-black rounded-full p-2 hover:opacity-80 transition-opacity"
+                >
+                  <IoLogoInstagram size={20} className="text-white" />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@bsbelindastore"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-black rounded-full p-2 hover:opacity-80 transition-opacity"
+                >
+                  <IoLogoTiktok size={20} className="text-white" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </SheetContent>

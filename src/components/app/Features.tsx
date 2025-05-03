@@ -12,7 +12,7 @@ interface featuresProps {
 export default function Features({ title, products }: featuresProps) {
   return (
     <section
-      className={`w-full h-max flex flex-col justify-center items-center ${
+      className={`w-full h-max flex flex-col justify-center items-center overflow-hidden ${
         title === "NUEVA COLECCIÓN" ? "py-20" : "py-[10px]"
       }`}
     >
